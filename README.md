@@ -98,6 +98,12 @@ npm start
 ```
 ### IDE 설정
 #### 확장 프로그램 목록
+- VSCode React Refactor
+- Prettier – Code formatted
+- Auto Rename Tag
+- Live Share
+### Convention
+
 ### Code Convention
 - Code Formatting: Prettier Default
 - [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
