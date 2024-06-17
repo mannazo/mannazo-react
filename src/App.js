@@ -1,117 +1,88 @@
-import { useState } from 'react';
-import './App.css';
+import React from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { createStore } from 'redux';
+import './style.css';
 
-function Header(props) {
-  console.log('props', props);
-  return (    <header>
-    <h1>
-      <a href="/" onClick={(event) => {
-        event.preventDefault();
-        props.onChangeMode();
-      }}>{props.title}</a>
-    </h1>
-  </header>)
-}
-
-function Nav(props) {
-  const lis = [];
-  for(let i=0; i<props.topics.length; i++) {
-    let t= props.topics[i];
-    lis.push(<li key={t.id}>
-      <a id={t.id} href={'/read/'+t.id} onClick={event => {
-      event.preventDefault();
-      props.onChangeMode(Number(event.target.id));
-    }}>{t.title}</a></li>);
-  }
-  return (
-    <nav>
-      <ol>
-        {lis}
-      </ol>
-    </nav>
-  )
-}
-
-function Article(props) {
-  return (
-    <article>
-      <h2>
-        {props.title}
-      </h2>
-      {props.body}
-    </article>
-  )
-}
-
-function Create(props) {
-  return (
-    <article>
-      <h2>Create</h2>
-      <form onSubmit={event=>{
-        event.preventDefault();
-        const title = event.target.title.value;
-        const body = event.target.body.value;
-        props.onCreate(title, body);
-      }}>
-        <p><input type="text" name="title" placeholder="title"></input></p>
-        <p><textarea name="body" placeholder="body"></textarea></p>
-        <p><input type="submit" value="Create"></input></p>
-      </form>
-    </article>
-
-  )
-}
-function App() {
-  const _mode = useState('WELCOME');
-  console.log('_mode', _mode);
-  //mode, setMode는 임의로 설정한 이름일 뿐이다.
-  const [mode, setMode] = useState('WELCOME');
-  const [id, setId] = useState(null);
-  const [nextId, setNextId] = useState(4);
-  const [topics, setTopics] = useState([
-    {id:1, title:'html', body:'html is...'},
-    {id:2, title:'css', body:'css is...'},
-    {id:3, title:'javascript', body:'javascript is...'},
-  ]);
-
-  let content = null;
-  if(mode==='WELCOME') {
-    content = <Article title ="WELCOME" body="Hello, Web"></Article>
-  } else if(mode==='READ') {
-    let title, body = null;
-    for(let i=0; i<topics.length; i++) {
-      console.log(topics[i].id, id);
-      if(topics[i].id===id) {
-        title = topics[i].title;
-        body = topics[i].body;
-      }
-    }
-    content = <Article title={title} body={body}></Article>
-  } else if(mode=='CREATE') {
-    content = <Create onCreate={(_title, _body)=>{
-      const newTopic = {id:nextId, title:_title, body:_body};
-      topics.push(newTopic);
-      // setTopics(topics);
-    }}></Create>
+function reducer(currentState, action) {
+  if (currentState === undefined) {
+    return { number: 1 };
   }
 
-  return (    <div>
-    <Header title="REACT" onChangeMode={() => {
-      // alert("header");
-      setMode('WELCOME');
-    }}></Header>
-    <Nav topics={topics} onChangeMode={(_id) => {
-      // alert(id);
-      setMode('READ');
-      setId(_id);
-      }}></Nav>
-      {content}
-      <a href="/create" onClick={event=>{
-        event.preventDefault();
-        setMode('CREATE');}}>
-        Create</a>
-    {/* <Article title="Welcome" body="Hello, Web"></Article> */}
-  </div>);
-}
+  const newState = { ...currentState };
 
-export default App;
+
+  if(action.type==='PLUS') {
+    newState.number++;
+  }
+
+  return newState;
+}
+const store = createStore(reducer);
+
+export default function App() {
+  return (
+    <div id="container">
+      <h1>Root</h1>
+      <div id="grid">
+        <Provider store={store}>
+          <Left1></Left1>
+          <Right1></Right1>
+        </Provider>
+      </div>
+    </div>
+  );
+}
+function Left1(props) {
+  return (
+    <div>
+      <h1>Left1 </h1>
+      <Left2></Left2>
+    </div>
+  );
+}
+function Left2(props) {
+  return (
+    <div>
+      <h1>Left2 : </h1>
+      <Left3></Left3>
+    </div>
+  );
+}
+function Left3() {
+  console.log('L3');
+  const number = useSelector((state) => state.number);
+
+  return (
+    <div>
+      <h1>Left3: {number}</h1>
+    </div>
+  );
+}
+function Right1(props) {
+  return (
+    <div>
+      <h1>Right1</h1>
+      <Right2></Right2>
+    </div>
+  );
+}
+function Right2(props) {
+  return (
+    <div>
+      <h1>Right2</h1>
+      <Right3></Right3>
+    </div>
+  );
+}
+function Right3(props) {
+  console.log('R3');
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <h1>Right3</h1>
+      <input type="button" value="+" onClick={() => {
+        dispatch({ type: 'PLUS'})
+      }}></input>
+    </div>
+  );
+}
