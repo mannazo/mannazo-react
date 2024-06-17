@@ -4,7 +4,10 @@
 - 백엔드 서버로의 요청은 `/api` 주소로 오고, 리버스 프록시 처리합니다.
 
 ## 생성 방법
-- [Create React App](https://create-react-app.dev/) 사용
+Vite 템플릿 사용 >> React + TS + SWC
+- `npm create vite@latest`
+~~- [Create React App](https://create-react-app.dev/) 사용~~
+
 
 ## 주요 라이브러리 및 도구
 - 라우팅 처리: React Router
@@ -30,27 +33,42 @@
 
 ## 패키지 구조
 ```
-my-app
-├── README.md
-├── node_modules
-├── package.json
-├── .gitignore
-├── public
-│   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   └── robots.txt
-└── src
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── index.css
-    ├── index.js
-    ├── logo.svg
-    ├── serviceWorker.js
-    └── setupTests.js
+src/
+  ├── assets/
+  │   ├── images/
+  │   ├── styles/
+  │   └── ...
+  ├── components/
+  │   ├── common/
+  │   │   ├── Button.tsx
+  │   │   ├── Input.tsx
+  │   │   └── ...
+  │   ├── layout/
+  │   │   ├── Header.tsx
+  │   │   ├── Footer.tsx
+  │   │   └── ...
+  │   └── ...
+  ├── pages/
+  │   ├── Home/
+  │   │   ├── index.tsx
+  │   │   ├── components/
+  │   │   └── ...
+  │   ├── About/
+  │   │   ├── index.tsx
+  │   │   ├── components/
+  │   │   └── ...
+  │   └── ...
+  ├── services/
+  │   ├── api.ts
+  │   └── ...
+  ├── types/
+  │   ├── User.ts
+  │   └── ...
+  ├── utils/
+  │   ├── helpers.ts
+  │   └── ...
+  ├── App.tsx
+  └── main.tsx
 ```
 
 # 개발환경 설정
