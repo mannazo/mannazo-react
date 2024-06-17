@@ -52,4 +52,8 @@ my-app
 ### Node.js 및 npm 설치 가이드
 ### IDE 설정
 #### 확장 프로그램 목록
+- VSCode React Refactor
+- Prettier – Code formatted
+- Auto Rename Tag
+- Live Share
 ### Convention
