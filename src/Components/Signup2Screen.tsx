@@ -1,5 +1,13 @@
 import React from 'react';
 
+// {
+//   "nationality": "integer",
+//   "language": "string",
+//   "profile_photo": "string",
+//   "bio": "string",
+//   "residence": "string",
+//   "role": "string",
+// }
 const Signup2Screen: React.FC = () => {
   return (
     <div>
