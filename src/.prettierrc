@@ -5,5 +5,19 @@
   "semi": false,
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "interface",
+    "(?=content|api)",
+    "context/",
+    "mock/",
+    "config",
+    "utils/",
+    "hooks/",
+    "(components/|./index)",
+    ".svg",
+    "^../(.*)$",
+    "(?=./styles.module.scss)"
+  ]
 }
