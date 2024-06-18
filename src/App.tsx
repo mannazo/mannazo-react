@@ -12,6 +12,8 @@ import Signup2Screen from "./Pages/Signup2Screen.tsx";
 import TravelSubmissionScreen from "./Pages/TravelSubmissionScreen.tsx";
 import LoginScreen from "./Pages/LoginScreen.tsx";
 import MypageScreen from "./Pages/MypageScreen.tsx";
+import Item1 from "./Pages/Item1.tsx";
+import Item2 from "./Pages/Item2.tsx";
 
 const App: React.FC = () => {
     return <>
@@ -25,6 +27,8 @@ const App: React.FC = () => {
                 <Route path="/Pages/TravelSubmissionScreen" element={<TravelSubmissionScreen />} />
                 <Route path="/Pages/LoginScreen" element={<LoginScreen />} />
                 <Route path="/Pages/MypageScreen" element={<MypageScreen />} />
+                <Route path="/item1" element={<Item1 />} />
+                <Route path="/item2" element={<Item2 />} />
             </Routes>
             <Footer />
         </Router>

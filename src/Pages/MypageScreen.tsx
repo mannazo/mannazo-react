@@ -1,6 +1,5 @@
 import React from 'react';
 import '../style/MypageScreen.css';
-import { BrowserRouter as Router } from "react-router-dom";
 import MypageSidebar from "../Components/MypageSidebar.tsx";
 import MypageContent from "../Components/MypageContent.tsx";
 
@@ -14,13 +13,9 @@ const MypageScreen: React.FC = () => {
                 <p>이메일</p>
             </ul>
         </div>
-        <Router>
-        <div>
-            <MypageSidebar/>
-            <MypageContent/>
-        </div>
-        </Router>
-    </>;
+                <MypageSidebar />
+                <MypageContent />
+    </>
 };
 
 export default MypageScreen;
