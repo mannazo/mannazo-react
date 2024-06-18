@@ -1,6 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+// 사용자 정보
+
+// {
+//   "email": "string",
+//   "password": "string",
+//   "name": "string",
+// }
 
 const SignupScreen: React.FC = () => {
+    const navigate = useNavigate();
+
+    const goToSignup2Screen = () => {
+        navigate('../Pages/Signup2Screen')}
+
   return (
     <div>
       <div>
@@ -15,14 +28,10 @@ const SignupScreen: React.FC = () => {
       </div>
       <div>
         <label htmlFor="password">비밀번호</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="영문,숫자 조합 8자리 이상 입력해주세요. 꼭!"
-        />
+        <input id="password" type="password" />
         {/* <span>비밀번호를 입력해주세요.</span> */}
       </div>
-      <button>다음</button>
+      <button onClick={goToSignup2Screen}>다음</button>
     </div>
   );
 };
