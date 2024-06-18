@@ -115,6 +115,7 @@ brew install node
 npm start
 ```
 ### IDE 설정
+# IntelliJ -> Prettier로 오토포매팅 필수
 #### 확장 프로그램 목록
 - VSCode React Refactor
 - Prettier – Code formatted
@@ -123,6 +124,6 @@ npm start
 ### Convention
 
 ### Code Convention
-- Code Formatting: Prettier Default
+- Prettier 규칙 따를 것
 - [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
 - [Airbnb React Style Guide](https://github.com/airbnb/javascript/blob/master/react/README.md)
