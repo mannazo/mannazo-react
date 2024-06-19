@@ -7,8 +7,9 @@ import SignupScreen from './pages/SignupScreen.tsx';
 import Signup2Screen from './pages/Signup2Screen.tsx';
 import TripInfo from './components/trip/TripInfo.tsx';
 import LoginScreen from './pages/LoginScreen.tsx';
-import Layout from './Layout.tsx';
+import Layout from './components/layouts/Layout.tsx';
 import TravelSubmissionScreen from './pages/TravelSubmissionScreen.tsx';
+import Safety from './pages/Safety.tsx';
 
 const App: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ const App: React.FC = () => {
           <Route path={PATHS.HOME} element={<MainScreen />} />
           <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
           <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
-          <Route path={PATHS.SAFETY} />
+          <Route path={PATHS.SAFETY} element={<Safety />} />
           <Route path={PATHS.TRIP} element={<TripInfo />} />
           <Route path={PATHS.CHAT} />
           <Route path={PATHS.LOCAL} />

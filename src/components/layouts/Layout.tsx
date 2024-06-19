@@ -1,16 +1,16 @@
 import { Outlet } from 'react-router-dom';
-import Header from './components/Header.tsx';
-import Footer from './components/Footer.tsx';
+import Header from '../Header.tsx';
+import Footer from '../Footer.tsx';
 
 const Layout: React.FC = () => {
   return (
-    <>
+    <div className='min-h-screen flex flex-col'>
       <Header></Header>
-      <main>
+      <main className='flex-grow'>
         <Outlet />
       </main>
       <Footer></Footer>
-    </>
+    </div>
   );
 };
 

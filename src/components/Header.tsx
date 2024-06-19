@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Header.css';
 import { NavLink } from 'react-router-dom';
 import * as PATHS from '../constants/paths';
-import Logo from '../assets/react.svg';
+import Logo from '/vite.svg';
 
 const Header: React.FC = () => {
   return (
