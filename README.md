@@ -31,44 +31,44 @@ Vite 템플릿 사용 >> React + TS + SWC
   }
 ```
 
-## 패키지 구조
+## 디렉토리 구조
+[가이드](https://dev.to/fpaghar/folder-structuring-techniques-for-beginner-to-advanced-react-projects-30d7)
+- 4 이상의 깊이는 피할 것
+### 예시
 ```
 src/
-  ├── assets/
-  │   ├── images/
-  │   ├── styles/
-  │   └── ...
   ├── components/
   │   ├── common/
-  │   │   ├── Button.tsx
-  │   │   ├── Input.tsx
-  │   │   └── ...
+  │   │   ├── Button/
+  │   │   ├── Input/
+  │   │   └── Modal/
   │   ├── layout/
-  │   │   ├── Header.tsx
-  │   │   ├── Footer.tsx
-  │   │   └── ...
-  │   └── ...
-  ├── pages/
-  │   ├── Home/
-  │   │   ├── index.tsx
-  │   │   ├── components/
-  │   │   └── ...
-  │   ├── About/
-  │   │   ├── index.tsx
-  │   │   ├── components/
-  │   │   └── ...
-  │   └── ...
+  │   │   ├── Header/
+  │   │   ├── Footer/
+  │   │   └── Sidebar/
+  │   ├── navigation/
+  │   │   └── Navbar/
+  │   ├── pages/
+  │   │   ├── Home/
+  │   │   ├── About/
+  │   │   └── Contact/
+  │   └── forms/
+  │       ├── LoginForm/
+  │       └── RegisterForm/
+  ├── hooks/
+  │   ├── useAuth/
+  │   └── useTheme/
   ├── services/
-  │   ├── api.ts
-  │   └── ...
-  ├── types/
-  │   ├── User.ts
-  │   └── ...
-  ├── utils/
-  │   ├── helpers.ts
-  │   └── ...
-  ├── App.tsx
-  └── main.tsx
+  │   ├── authService/
+  │   └── apiService/
+  ├── styles/
+  │   ├── globalStyles/
+  │   └── themes/
+  ├── assets/
+  │   ├── images/
+  │   └── icons/
+  └── config/
+      └── constants/
 ```
 
 # 개발환경 설정
@@ -115,14 +115,33 @@ brew install node
 npm start
 ```
 ### IDE 설정
+# IntelliJ -> Prettier로 오토포매팅 필수
 #### 확장 프로그램 목록
 - VSCode React Refactor
 - Prettier – Code formatted
 - Auto Rename Tag
 - Live Share
-### Convention
 
-### Code Convention
-- Code Formatting: Prettier Default
+# Convention
+## Code Convention
+- Prettier 규칙 따를 것
+```json
+{
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": false
+}
+```
+### 참조할 수 있는 규칙
 - [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
 - [Airbnb React Style Guide](https://github.com/airbnb/javascript/blob/master/react/README.md)
+
+## 상수 관리
+#### 하드코딩 금지!
+- `src/constants/` 경로에 ts 파일 만들어 import 하여 사용할 것
+- URL 변경 등, 상수 변경이 필요한 경우 해당 파일만 변경할 것
+- 상수의 이름 변경이 필요한 경우 사전 협의할 것

@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom'
-import Header from './Components/Header.tsx'
-import Footer from './Components/Footer.tsx'
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header.tsx';
+import Footer from './components/Footer.tsx';
 
 const Layout: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Layout: React.FC = () => {
       </main>
       <Footer></Footer>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
