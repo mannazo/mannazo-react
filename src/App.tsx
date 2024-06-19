@@ -7,7 +7,7 @@ import Signup2Screen from './pages/Signup2Screen.tsx';
 import TripInfo from './components/trip/TripInfo.tsx';
 import LoginScreen from './pages/LoginScreen.tsx';
 import Layout from './Layout.tsx';
-import MypageScreen from './pages/MypageScreen.tsx';
+// import MypageScreen from './pages/MypageScreen.tsx';
 import TravelSubmissionScreen from './pages/TravelSubmissionScreen.tsx';
 
 const App: React.FC = () => {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
           <Route path='/Pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
           <Route path='/trip' element={<TripInfo />} />
           <Route path='/Pages/LoginScreen' element={<LoginScreen />} />
-          <Route path='/Pages/MypageScreen' element={<MypageScreen />} />
+          {/*<Route path='/Pages/MypageScreen' element={<MypageScreen />} />*/}
         </Route>
       </Routes>
     </>
