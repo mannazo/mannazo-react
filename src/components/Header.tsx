@@ -1,6 +1,8 @@
 import React from 'react';
-import '../style/Header.css';
-import { Link } from 'react-router-dom';
+import '../styles/Header.css';
+import { NavLink } from 'react-router-dom';
+import * as PATHS from '../constants/paths';
+import Logo from '/vite.svg';
 
 const Header: React.FC = () => {
   return (
@@ -11,7 +13,7 @@ const Header: React.FC = () => {
             <div className='flex items-center justify-between h-16'>
               <div className=' flex items-center'>
                 <a className='flex-shrink-0' href='/'>
-                  <img className='w-8 h-8' src='../assets/react.svg' alt='Workflow' />
+                  <img className='w-8 h-8' src={Logo} alt='Workflow' />
                 </a>
                 <Menus />
               </div>
@@ -78,13 +80,13 @@ const Menus: React.FC = () => {
   return (
     <div className='hidden md:block'>
       <div className='flex items-baseline ml-10 space-x-4'>
-        <Link to='/'>Home/로고</Link>
-        <a href='#'>Safety</a>
-        <Link to='/Pages/TravelSubmissionScreen'>여행자</Link>
-        <Link to='trip'>쭈니</Link>
-        <a href='#'>채팅방</a>
-        <Link to='/Pages/LoginScreen'>로그인</Link>
-        <Link to='/Pages/SignupScreen'>회원가입</Link>
+        <NavLink to={PATHS.HOME}>Home</NavLink>
+        <NavLink to={PATHS.SAFETY}>Safety</NavLink>
+        <NavLink to={PATHS.TRIP}>여행자</NavLink>
+        <NavLink to={PATHS.LOCAL}>쭈니</NavLink>
+        <NavLink to={PATHS.CHAT}>채팅방</NavLink>
+        <NavLink to={PATHS.AUTH_SIGN_IN}>로그인</NavLink>
+        <NavLink to={PATHS.AUTH_SIGN_UP_FORM}>회원가입</NavLink>
       </div>
     </div>
   );

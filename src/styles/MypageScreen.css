@@ -1,16 +1,4 @@
-#mypage-nav {
-    border : 2px solid black;
-}
-
-#mypage-h1 {
-    margin : 0% 30% 10px 30%;
-}
-
-#mypage-grid1 {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-}
-
-#mypage-content {
-    border : 2px solid black;
+#mypageScreen-grid {
+    display : grid;
+    grid-template-columns: 1fr 1fr;
 }
