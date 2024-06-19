@@ -31,44 +31,44 @@ Vite 템플릿 사용 >> React + TS + SWC
   }
 ```
 
-## 패키지 구조
+## 디렉토리 구조
+[가이드](https://dev.to/fpaghar/folder-structuring-techniques-for-beginner-to-advanced-react-projects-30d7)
+- 4 이상의 깊이는 피할 것
+### 예시
 ```
 src/
-  ├── assets/
-  │   ├── images/
-  │   ├── styles/
-  │   └── ...
   ├── components/
   │   ├── common/
-  │   │   ├── Button.tsx
-  │   │   ├── Input.tsx
-  │   │   └── ...
+  │   │   ├── Button/
+  │   │   ├── Input/
+  │   │   └── Modal/
   │   ├── layout/
-  │   │   ├── Header.tsx
-  │   │   ├── Footer.tsx
-  │   │   └── ...
-  │   └── ...
-  ├── pages/
-  │   ├── Home/
-  │   │   ├── index.tsx
-  │   │   ├── components/
-  │   │   └── ...
-  │   ├── About/
-  │   │   ├── index.tsx
-  │   │   ├── components/
-  │   │   └── ...
-  │   └── ...
+  │   │   ├── Header/
+  │   │   ├── Footer/
+  │   │   └── Sidebar/
+  │   ├── navigation/
+  │   │   └── Navbar/
+  │   ├── pages/
+  │   │   ├── Home/
+  │   │   ├── About/
+  │   │   └── Contact/
+  │   └── forms/
+  │       ├── LoginForm/
+  │       └── RegisterForm/
+  ├── hooks/
+  │   ├── useAuth/
+  │   └── useTheme/
   ├── services/
-  │   ├── api.ts
-  │   └── ...
-  ├── types/
-  │   ├── User.ts
-  │   └── ...
-  ├── utils/
-  │   ├── helpers.ts
-  │   └── ...
-  ├── App.tsx
-  └── main.tsx
+  │   ├── authService/
+  │   └── apiService/
+  ├── styles/
+  │   ├── globalStyles/
+  │   └── themes/
+  ├── assets/
+  │   ├── images/
+  │   └── icons/
+  └── config/
+      └── constants/
 ```
 
 # 개발환경 설정

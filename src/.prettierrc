@@ -1,23 +1,16 @@
 {
-  "trailingComma": "es5",
-  "printWidth": 80,
-  "tabWidth": 2,
-  "semi": false,
   "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "semi": true,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "jsxSingleQuote": true,
   "jsxBracketSameLine": false,
-  "importOrder": [
-    "<THIRD_PARTY_MODULES>",
-    "interface",
-    "(?=content|api)",
-    "context/",
-    "mock/",
-    "config",
-    "utils/",
-    "hooks/",
-    "(components/|./index)",
-    ".svg",
-    "^../(.*)$",
-    "(?=./styles.module.scss)"
-  ]
+  "singleAttributePerLine": false,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always"
 }
