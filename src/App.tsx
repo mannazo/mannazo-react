@@ -20,6 +20,7 @@ const App: React.FC = () => {
           <Route path='/Pages/Signup2Screen' element={<Signup2Screen />} />
           <Route path='/Pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
           <Route path='/trip' element={<TripInfo />} />
+
           <Route path='/Pages/LoginScreen' element={<LoginScreen />} />
           {/*<Route path='/Pages/MypageScreen' element={<MypageScreen />} />*/}
         </Route>

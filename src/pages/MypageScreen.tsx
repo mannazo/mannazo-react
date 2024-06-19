@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/MypageScreen.css';
+import '../styles/MypageScreen.css';
 import MypageSidebar from '../components/MypageSidebar.tsx';
 import MypageContent from '../components/MypageContent.tsx';
 
