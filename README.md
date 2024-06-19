@@ -115,14 +115,33 @@ brew install node
 npm start
 ```
 ### IDE 설정
+# IntelliJ -> Prettier로 오토포매팅 필수
 #### 확장 프로그램 목록
 - VSCode React Refactor
 - Prettier – Code formatted
 - Auto Rename Tag
 - Live Share
-### Convention
 
-### Code Convention
-- Code Formatting: Prettier Default
+# Convention
+## Code Convention
+- Prettier 규칙 따를 것
+```json
+{
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": false
+}
+```
+### 참조할 수 있는 규칙
 - [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
 - [Airbnb React Style Guide](https://github.com/airbnb/javascript/blob/master/react/README.md)
+
+## 상수 관리
+#### 하드코딩 금지!
+- `src/constants/` 경로에 ts 파일 만들어 import 하여 사용할 것
+- URL 변경 등, 상수 변경이 필요한 경우 해당 파일만 변경할 것
+- 상수의 이름 변경이 필요한 경우 사전 협의할 것
