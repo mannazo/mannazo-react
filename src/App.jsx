@@ -9,6 +9,9 @@ import TripInfo from './components/trip/TripInfo.jsx';
 import Safety from './pages/Safety.jsx';
 import TravelSubmissionScreen from './pages/TravelSubmissionScreen.jsx';
 import Signup2Screen from './pages/Signup2Screen.jsx';
+import MypageScreen from './pages/MypageScreen.jsx';
+import Local from './pages/Local.jsx';
+import Chat from './pages/Chat.jsx';
 
 function App() {
   return (
@@ -19,16 +22,19 @@ function App() {
           <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
           <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
           <Route path={PATHS.SAFETY} element={<Safety />} />
-          <Route path={PATHS.TRIP} element={<TripInfo />} />
-          <Route path={PATHS.CHAT} />
-          <Route path={PATHS.LOCAL} />
+          <Route path={PATHS.TRIP} element={<TripInfo />}>
+            <Route path={PATHS.TRIP_LIST_BY_LOCATION} element={<TripInfo />} />
+          </Route>
+
+          <Route path={PATHS.CHAT} element={<Chat />} />
+          <Route path={PATHS.LOCAL} element={<Local />} />
           <Route path={PATHS.PROFILE} />
           <Route path={PATHS.PROFILE_VIEW} />
 
-          <Route path='/Pages/Signup2Screen' element={<Signup2Screen />} />
-          <Route path='/Pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-
-          <Route path='/Pages/LoginScreen' element={<LoginScreen />} />
+          <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
+          <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
+          <Route path='/pages/MypageScreen' element={<MypageScreen />} />
+          <Route path='/pages/LoginScreen' element={<LoginScreen />} />
         </Route>
       </Routes>
     </>
