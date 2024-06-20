@@ -9,6 +9,7 @@ import TripInfo from './components/trip/TripInfo.jsx';
 import Safety from './pages/Safety.jsx';
 import TravelSubmissionScreen from './pages/TravelSubmissionScreen.jsx';
 import Signup2Screen from './pages/Signup2Screen.jsx';
+import MypageScreen from './pages/MypageScreen.jsx';
 
 function App() {
   return (
@@ -25,10 +26,10 @@ function App() {
           <Route path={PATHS.PROFILE} />
           <Route path={PATHS.PROFILE_VIEW} />
 
-          <Route path='/Pages/Signup2Screen' element={<Signup2Screen />} />
-          <Route path='/Pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-
-          <Route path='/Pages/LoginScreen' element={<LoginScreen />} />
+          <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
+          <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
+          <Route path='/pages/MypageScreen' element={<MypageScreen />} />
+          <Route path='/pages/LoginScreen' element={<LoginScreen />} />
         </Route>
       </Routes>
     </>
