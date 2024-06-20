@@ -20,16 +20,16 @@ const LoginScreen = () => {
         <label htmlFor='password'>비밀번호</label>
         <input id='password' name='password' type='password' />
       </div>
+      <button>이메일로 로그인</button>
       <div className='shadow-2xl'>
         <button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg'>
           <FcGoogle className='mr-4' />
           Sign in
         </button>
       </div>
-      <button>이메일로 로그인</button>
+
       <button>카카오로 시작</button>
       <button>네이버로 시작</button>
-      <button>구글로 시작</button>
     </div>
   );
 };

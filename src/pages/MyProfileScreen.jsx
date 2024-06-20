@@ -36,11 +36,11 @@ function Profile() {
     'Loading...'
   ) : (
     <div className='flex flex-row'>
-      {/*<img*/}
-      {/*    src={user.profileImage}*/}
-      {/*    alt="User Avatar"*/}
-      {/*    className="rounded-full w-20 h-20 mr-4"*/}
-      {/*/>*/}
+      <img
+        src='https://picsum.photos/200'
+        alt='User Avatar'
+        className='rounded-full w-20 h-20 mr-4'
+      />
       <div>
         <h1>{user.name}</h1>
         <ul>
