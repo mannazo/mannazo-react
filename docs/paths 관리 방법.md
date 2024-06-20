@@ -1,7 +1,7 @@
 # paths 관리하기
 URL 경로를 만들 때 사용하는 paths 상수를 관리하는 방법에 관한 문서입니다.
 
-# paths.ts
+# paths.js
 ## 작성 방법
 - `src/constants/paths.th`에서 url을 만들기 위한 경로들을 관리합니다.
 - `URL Parameter`가 있는 경우 `:URLParam`과 같이 앞에 `:`를 붙여줍니다.
