@@ -1,11 +1,10 @@
 import React from 'react';
-import GoogleLogin from 'react-google-login';
+// import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import Logo from '/vite.svg';
 
 const LoginScreen = () => {
-  const responseGoogle = (response) => {};
   return (
     <div className='flex justify-center items-center flex-col h-screen'>
       <div className='p-5'>
@@ -22,23 +21,10 @@ const LoginScreen = () => {
         <input id='password' name='password' type='password' />
       </div>
       <div className='shadow-2xl'>
-        <GoogleLogin
-          clientId=''
-          render={(renderProps) => (
-            <button
-              type='button'
-              className='bg-mainColor flex justify-items-center p-3 rounded-lg'
-              onClick={renderProps.onClick}
-              disabled={renderProps.disabled}
-            >
-              <FcGoogle className='mr-4' />
-              Sign in
-            </button>
-          )}
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy='single_host_origin'
-        ></GoogleLogin>
+        <button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg'>
+          <FcGoogle className='mr-4' />
+          Sign in
+        </button>
       </div>
       <button>이메일로 로그인</button>
       <button>카카오로 시작</button>
