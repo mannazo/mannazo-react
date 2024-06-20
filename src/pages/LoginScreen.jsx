@@ -1,10 +1,27 @@
 import React from 'react';
-// import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
-import { useNavigate } from 'react-router-dom';
 import Logo from '/vite.svg';
+import axios from 'axios';
+import { API_SERVER } from '../constants/paths.js';
 
 const LoginScreen = () => {
+  const openPopup = (url) => {
+    window.open(url, 'newWindow', 'width=800, height=600');
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_SERVER + '/login/kakao');
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching data: ${error}`);
+    }
+  };
+
+  const onKakaoButtonClick = async () => {
+    const url = await fetchData();
+    openPopup(url);
+  };
   return (
     <div className='flex justify-center items-center flex-col h-screen'>
       <div className='p-5'>
@@ -28,7 +45,7 @@ const LoginScreen = () => {
         </button>
       </div>
 
-      <button>카카오로 시작</button>
+      <button onClick={onKakaoButtonClick}>KaKao</button>
       <button>네이버로 시작</button>
     </div>
   );
