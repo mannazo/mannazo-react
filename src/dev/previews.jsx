@@ -1,6 +1,7 @@
 import { ComponentPreview, Previews } from '@react-buddy/ide-toolbox';
 import { PaletteTree } from './palette';
 import TripInfo from '../components/trip/TripInfo.jsx';
+import Header from '../components/test/ResponsiveHeader.jsx';
 
 const ComponentPreviews = () => {
   return (
@@ -10,6 +11,9 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path='/ComponentPreviews'>
         <ComponentPreviews />
+      </ComponentPreview>
+      <ComponentPreview path='/Header'>
+        <Header />
       </ComponentPreview>
     </Previews>
   );

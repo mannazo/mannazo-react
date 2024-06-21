@@ -20,7 +20,7 @@ const TripInfo = () => {
   return (
     <div className='flex'>
       {/* 레프트 사이드바 */}
-      <div className='w-1/4 p-4'>
+      <div className='w-1/4'>
         <h2 className='text-lg font-semibold mb-4'>검색 조건</h2>
         <div className='mb-4'>
           <label htmlFor='location' className='block mb-1'>
@@ -77,7 +77,7 @@ const travelersData = [
     age: 25,
     photo: 'https://picsum.photos/50/50',
     description: '안녕하세요! 저는 홍길동입니다. 세계 일주를 꿈꾸며 여행 중입니다.',
-    itinerary: '한국 -> 일본 -> 중국 -> 태국 -> 호주',
+    itinerary: '한국 -> 일본 -> 한국',
   },
   // 다른 여행자 데이터...
 ];

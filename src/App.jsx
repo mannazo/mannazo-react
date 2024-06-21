@@ -17,8 +17,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path={PATHS.HOME} element={<MainScreen />} />
+        {/*Layout 클래스를 사용하는 경로*/}
+        <Route path={PATHS.HOME} element={<Layout />}>
+          <Route index element={<MainScreen />} />
           <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
           <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
           <Route path={PATHS.SAFETY} element={<Safety />} />
@@ -36,6 +37,9 @@ function App() {
           <Route path='/pages/MypageScreen' element={<MypageScreen />} />
           <Route path='/pages/LoginScreen' element={<LoginScreen />} />
         </Route>
+
+        {/*Layout 클래스를 사용하지 않는 경로*/}
+        <Route></Route>
       </Routes>
     </>
   );

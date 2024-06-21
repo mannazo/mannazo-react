@@ -5,13 +5,16 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { DevSupport } from '@react-buddy/ide-toolbox';
 import { ComponentPreviews, useInitial } from './dev/index.js';
+import { NextUIProvider } from '@nextui-org/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-        <App />
-      </DevSupport>
-    </BrowserRouter>
+    <NextUIProvider>
+      <BrowserRouter>
+        <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+          <App />
+        </DevSupport>
+      </BrowserRouter>
+    </NextUIProvider>
   </React.StrictMode>,
 );
