@@ -5,23 +5,48 @@ import axios from 'axios';
 import { API_SERVER } from '../constants/paths.js';
 
 const LoginScreen = () => {
+  const onKakaoButtonClick = async () => {
+    const url = await fetchData();
+    openPopup(url);
+  };
+
+  function split(newURL) {
+    const splitUrl = newURL.split('?code=');
+    const code = splitUrl[1];
+    console.log(code);
+    const fetchCode = async () => {
+      try {
+        const response = await axios.get(API_SERVER + '/login/kakao/callback?code=' + code);
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error(`Error fetching data: ${error}`);
+      }
+    };
+    fetchCode();
+  }
+
   const openPopup = (url) => {
-    window.open(url, 'newWindow', 'width=800, height=600');
+    const newWindow = window.open(url, 'newWindow', 'width=800, height=600');
+    if (newWindow) {
+      newWindow.onload = () => {
+        const newURL = newWindow.location.href;
+        console.log(newURL);
+        split(newURL);
+        newWindow.close();
+      };
+    }
   };
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_SERVER + '/login/kakao');
+      const response = await axios.get(API_SERVER + '/login/kakao/auth');
       return response.data;
     } catch (error) {
       console.error(`Error fetching data: ${error}`);
     }
   };
 
-  const onKakaoButtonClick = async () => {
-    const url = await fetchData();
-    openPopup(url);
-  };
   return (
     <div className='flex justify-center items-center flex-col h-screen'>
       <div className='p-5'>
