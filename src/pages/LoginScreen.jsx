@@ -18,6 +18,7 @@ const LoginScreen = () => {
       try {
         const response = await axios.get(API_SERVER + '/login/kakao/callback?code=' + code);
         console.log(response.data);
+        localStorage.setItem('fetchCodeResponse', JSON.stringify(response.data));
         return response.data;
       } catch (error) {
         console.error(`Error fetching data: ${error}`);
