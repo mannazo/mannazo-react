@@ -1,29 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import './index.css'
 
-// {
-//   "review_id": "string",
-//   "trip_id": "string",
-//   "reviewer_id": "string",
-//   "reviewee_id": "string",
-//   "rating": "integer",
-//   "content": "string",
-//   "timestamp": "string"
-// }
-// interface User {
-//     user_id: string;
-//     email: string;
-//     password: string;
-//     name: string;
-//     nationality: number;
-//     language: string;
-//     profile_photo: string;
-//     bio: string;
-//     residence: string;
-//     role: string;
-//     last_login_time: string;
-// }
+const fetchData = async () => {
+  try {
+    const response = await axios.get('https://mannazo.diligentp.com/login/kakao');
+    console.log(response.data.body);
+  } catch (error) {
+    console.error(`Error fetching data: ${error}`);
+  }
+};
 function Profile() {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -35,38 +20,38 @@ function Profile() {
   return !user ? (
     'Loading...'
   ) : (
-    <div className='flex flex-row'>
-      {/*<img*/}
-      {/*    src={user.profileImage}*/}
-      {/*    alt="User Avatar"*/}
-      {/*    className="rounded-full w-20 h-20 mr-4"*/}
-      {/*/>*/}
-      <div>
-        <h1>{user.name}</h1>
-        <ul>
-          <li>{user.nationality}</li>
-          <li>{user.lastLoginAt}</li>
-        </ul>
+    <div className='flex flex-col'>
+      <div className='flex flex-row'>
+        <img
+          src='https://picsum.photos/200'
+          alt='User Avatar'
+          className='rounded-full w-20 h-20 mr-4'
+        />
+        <div>
+          <h1>{user.name}</h1>
+          <ul>
+            <li>{user.nationality}</li>
+            <li>{user.lastLoginAt}</li>
+          </ul>
+        </div>
       </div>
+
+      <Overview user1={user}></Overview>
     </div>
   );
 }
 
-function Overview() {
-  // {
-  //   "travel_id": "string",
-  //   "user_id": "string",
-  //   "destination": "string",
-  //   "start_date": "string",
-  //   "end_date": "string",
-  //   "interests": "string",
-  //   "status": "string"
-  // }
+function Overview({ user1 }) {
   return (
     <div>
       <h1>Overview</h1>
-
-      <p>1. 거주지역 2. 나이 3. MBTI 4.언어 5.흥미 4. 소개글</p>
+      <p>Name: {user1.name}</p>
+      <p>1. 거주지역: {user1.nationality}</p>
+      <p>2. 나이: {user1.gender}</p>
+      <p>3. MBTI: {user1.mbti}</p>
+      <p>4. 언어: {user1.language}</p>
+      <p> 5. 흥미: {user1.interests}</p>
+      <p> 6.소개글: {user1.introduction}</p>
     </div>
   );
 }
@@ -96,21 +81,6 @@ const MyProfileScreen = () => {
         <Profile></Profile>
       </div>
       <div>
-        <button
-          onClick={() => {
-            setMode('Overview');
-          }}
-        >
-          Overview
-        </button>
-        <button
-          onClick={() => {
-            setMode('Feedback');
-          }}
-        >
-          Feedback
-        </button>
-        {content}
         <div>
           <h1>ad</h1>
         </div>
