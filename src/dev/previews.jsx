@@ -5,6 +5,7 @@ import App from '../App.jsx';
 import MypageScreen from '../pages/MypageScreen.jsx';
 import LoginScreen from "../pages/LoginScreen.jsx";
 import MyProfileScreen from "../pages/MyProfileScreen.jsx";
+import AccountSetting from "../pages/mypage/AccountSetting.jsx";
 
 const ComponentPreviews = () => {
   return (
@@ -26,6 +27,9 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path='/MyProfileScreen'>
         <MyProfileScreen />
+      </ComponentPreview>
+      <ComponentPreview path='/AccountSetting'>
+        <AccountSetting />
       </ComponentPreview>
     </Previews>
   );

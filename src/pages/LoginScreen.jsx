@@ -7,7 +7,8 @@ import { API_SERVER } from '../constants/paths.js';
 const LoginScreen = () => {
   const onKakaoButtonClick = async () => {
     const url = await fetchData();
-    openPopup(url);
+    window.location.href = url;
+    // openPopup(url);
   };
 
   function split(newURL) {
