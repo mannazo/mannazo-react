@@ -1,9 +1,15 @@
+import { Link, Outlet } from 'react-router-dom';
+
 const Nav = () => {
   return (
     <div>
       <ul>
-        <li>숨고캐시</li>
-        <li>계정설정</li>
+        <li>
+          <Link to='Sumgocash'>숨고캐시</Link>
+        </li>
+        <li>
+          <Link to='AccountSetting'>계정설정</Link>
+        </li>
         <li>충전/사용내역</li>
         <li>예약내역</li>
         <li>찜목록</li>
