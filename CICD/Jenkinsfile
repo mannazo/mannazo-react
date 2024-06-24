@@ -27,13 +27,14 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        
+        // 젠킨스의 빌드 결과물이 dist 디렉토리에 생성됌.
+
         stage('Build Image for mannazo-front-react') {
           steps {
                script {
-                    // Copy built artifacts to a temporary directory for Docker build
+                    // build 된 결과물을 ./docker_build로 복사
                     sh "mkdir -p docker_build"
-                    sh "cp -r $WORKSPACE/dist ./docker_build"  // Replace 'dist' with your actual build directory
+                    sh "cp -r $WORKSPACE/dist ./docker_build"  
 
                     docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTIAL}") {
                         def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
