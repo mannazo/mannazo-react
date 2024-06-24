@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY_URL = "${params.harbor_url}"
-        HARBOR_CREDENTAIL = "${params.harbor_credential}"
+        HARBOR_CREDENTIAL = "${params.harbor_credential}"
         GIT_USER_EMAIL = "${params.git_user_email}"
         GIT_CREDENTIAL = "${params.github_credential}"
     }
@@ -35,7 +35,7 @@ pipeline {
                     sh "mkdir -p docker_build"
                     sh "cp -r $WORKSPACE/dist ./docker_build"  // Replace 'dist' with your actual build directory
 
-                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
+                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTIAL}") {
                         def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
                         customImage.push()
                  }
@@ -51,7 +51,7 @@ pipeline {
                     def manifestsRepoBranch = 'main'
                     
                     // Checkout manifests repository
-                    git credentialsId: "${HARBOR_CREDENTAIL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
+                    git credentialsId: "${HARBOR_CREDENTIAL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
                     sh """
                         git pull origin main
                         sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazo-web.yaml
