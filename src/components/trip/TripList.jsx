@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card } from '@nextui-org/react';
 import { fetchRandomUser } from '../../utils/fetchRandomUser.js';
 import RandomUserProfile from '../RandomUserProfile.jsx';
-import TripListRandom from './TripListRandom.jsx';
+import FlippableCard from './FlippableCard.jsx';
 
 const TripList = () => {
   const [users, setUsers] = useState([]);
@@ -26,6 +26,19 @@ const TripList = () => {
       {users.map((user, index) => (
         <RandomUserProfile key={index} user={user} />
       ))}
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: '20px',
+          padding: '20px',
+        }}
+      >
+        {users.map((user, index) => (
+          <FlippableCard key={index} user={user} />
+        ))}
+      </div>
     </Card>
   );
 };

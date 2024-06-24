@@ -1,5 +1,4 @@
 import './App.css';
-import {NextUIProvider} from "@nextui-org/react";
 import { Route, Routes } from 'react-router-dom';
 import * as PATHS from './constants/paths.js';
 import Layout from './components/layouts/Layout.jsx';
@@ -19,36 +18,34 @@ import AccountSetting from './pages/mypage/AccountSetting.jsx';
 
 function App() {
   return (
-    <NextUIProvider>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path={PATHS.HOME} element={<MainScreen />} />
-          <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
-          <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
-          <Route path={PATHS.SAFETY} element={<Safety />} />
-          <Route path={PATHS.TRIP} element={<TripInfo />}>
-            <Route path={PATHS.TRIP_LIST_BY_LOCATION} element={<TripInfo />} />
-          </Route>
-
-          <Route path={PATHS.CHAT} element={<Chat />} />
-          <Route path={PATHS.LOCAL} element={<Local />} />
-          <Route path={PATHS.PROFILE} />
-          <Route path={PATHS.PROFILE_VIEW} />
-
-          <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
-          <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-          {/*<Route path='/pages/MypageScreen' element={<MypageScreen />} />*/}
-          <Route path='/pages/LoginScreen' element={<LoginScreen />} />
-
-          {/*Nav-MypageScreen*/}
-          <Route path='/pages/MypageScreen' element={<MypageScreen />}>
-            <Route path='Sumgocash' element={<Sumgocash />} />
-            <Route path='AccountSetting' element={<AccountSetting />} />
-          </Route>
-          <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path={PATHS.HOME} element={<MainScreen />} />
+        <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
+        <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
+        <Route path={PATHS.SAFETY} element={<Safety />} />
+        <Route path={PATHS.TRIP} element={<TripInfo />}>
+          <Route path={PATHS.TRIP_LIST_BY_LOCATION} element={<TripInfo />} />
         </Route>
-      </Routes>
-    </NextUIProvider>
+
+        <Route path={PATHS.CHAT} element={<Chat />} />
+        <Route path={PATHS.LOCAL} element={<Local />} />
+        <Route path={PATHS.PROFILE} />
+        <Route path={PATHS.PROFILE_VIEW} />
+
+        <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
+        <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
+        {/*<Route path='/pages/MypageScreen' element={<MypageScreen />} />*/}
+        <Route path='/pages/LoginScreen' element={<LoginScreen />} />
+
+        {/*Nav-MypageScreen*/}
+        <Route path='/pages/MypageScreen' element={<MypageScreen />}>
+          <Route path='Sumgocash' element={<Sumgocash />} />
+          <Route path='AccountSetting' element={<AccountSetting />} />
+        </Route>
+        <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
+      </Route>
+    </Routes>
   );
 }
 
