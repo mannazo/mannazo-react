@@ -1,7 +1,7 @@
 # 1단계: 빌드 단계
 
-# Node.js 14 버전을 사용하여 빌드 환경을 설정
-FROM node:14 as build  
+# Node.js 21.4.0 버전을 사용하여 빌드 환경을 설정
+FROM node:21.4.0 as build  
 
 # 작업 디렉토리를 /app으로 설정 
 WORKDIR /app
