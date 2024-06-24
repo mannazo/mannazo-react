@@ -3,6 +3,8 @@ import { PaletteTree } from './palette';
 import TripInfo from '../components/trip/TripInfo.jsx';
 import App from '../App.jsx';
 import MypageScreen from '../pages/MypageScreen.jsx';
+import LoginScreen from "../pages/LoginScreen.jsx";
+import MyProfileScreen from "../pages/MyProfileScreen.jsx";
 
 const ComponentPreviews = () => {
   return (
@@ -18,6 +20,12 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path='/MypageScreen'>
         <MypageScreen />
+      </ComponentPreview>
+      <ComponentPreview path='/LoginScreen'>
+        <LoginScreen />
+      </ComponentPreview>
+      <ComponentPreview path='/MyProfileScreen'>
+        <MyProfileScreen />
       </ComponentPreview>
     </Previews>
   );

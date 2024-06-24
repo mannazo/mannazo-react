@@ -1,7 +1,7 @@
 //docs 경로의 'paths 관리 방법'을 참조하세요
 
 //API 서버 주소
-export const API_SERVER = 'https://mannazo.diligentp.com/';
+export const API_SERVER = 'https://mannazo.diligentp.com';
 
 //라우팅을 위한 상수들
 export const HOME = '/';
