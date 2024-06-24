@@ -27,20 +27,25 @@ pipeline {
                 sh 'npm run build'
             }
         }
-
+        
         stage('Build Image for mannazo-front-react') {
-            steps {
-                script {
-                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
-                    // Jenkins 빌드 결과물 복사
-                    sh 'cp -r $WORKSPACE/build ./docker_build'
-                        def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile .")
-                        customImage.push()
-                    }
+          steps {
+               script {
+                  // Assuming the build output directory is 'dist'
+                   sh 'ls $WORKSPACE' // Print workspace contents for debugging
+
+                  // Copy built artifacts to a temporary directory for Docker build
+                  sh "mkdir -p docker_build"
+                   sh "cp -r $WORKSPACE/dist ./docker_build"  // Replace 'dist' with your actual build directory
+
+                   docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
+                       def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
+                     customImage.push()
+                 }
                 }
             }
         }
-
+        
         stage('Update Manifests for mannazo-deploy') {
             steps {
                 script { 
