@@ -32,6 +32,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
+                    // Jenkins 빌드 결과물 복사
+                    sh 'cp -r $WORKSPACE/build ./docker_build'
                         def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile .")
                         customImage.push()
                     }
