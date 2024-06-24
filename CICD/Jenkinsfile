@@ -27,13 +27,14 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        
+        // 젠킨스의 빌드 결과물이 dist 디렉토리에 생성됌.
+
         stage('Build Image for mannazo-front-react') {
           steps {
                script {
-                    // Copy built artifacts to a temporary directory for Docker build
+                    // build 된 결과물을 ./docker_build로 복사
                     sh "mkdir -p docker_build"
-                    sh "cp -r $WORKSPACE/dist ./docker_build"  // Replace 'dist' with your actual build directory
+                    sh "cp -r $WORKSPACE/dist ./docker_build"  
 
                     docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTIAL}") {
                         def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
@@ -54,11 +55,11 @@ pipeline {
                     git credentialsId: "${HARBOR_CREDENTIAL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
                     sh """
                         git pull origin main
-                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazo-web.yaml
-                        git add web/mannazo-web.yaml
-                        git config user.name 'DOLONG9'
+                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazu-web.yaml
+                        git add web/mannazu-web.yaml
+                        git config user.name 'DOLONG9' 
                         git config user.email "${GIT_USER_EMAIL}"
-                        git commit -m 'web/mannazo-web.yaml ${currentBuild.number} image versioning'
+                        git commit -m 'web/mannazu-web.yaml ${currentBuild.number} image versioning'
                     """
                     withCredentials([gitUsernamePassword(credentialsId: "${GIT_CREDENTIAL}")]) {
                        sh "git remote set-url origin https://github.com/mannazo/mannazo-deploy.git" 
