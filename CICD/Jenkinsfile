@@ -55,11 +55,11 @@ pipeline {
                     git credentialsId: "${HARBOR_CREDENTIAL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
                     sh """
                         git pull origin main
-                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazo-web.yaml
-                        git add web/mannazo-web.yaml
-                        git config user.name 'DOLONG9'
+                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazu-web.yaml
+                        git add web/mannazu-web.yaml
+                        git config user.name 'DOLONG9' 
                         git config user.email "${GIT_USER_EMAIL}"
-                        git commit -m 'web/mannazo-web.yaml ${currentBuild.number} image versioning'
+                        git commit -m 'web/mannazu-web.yaml ${currentBuild.number} image versioning'
                     """
                     withCredentials([gitUsernamePassword(credentialsId: "${GIT_CREDENTIAL}")]) {
                        sh "git remote set-url origin https://github.com/mannazo/mannazo-deploy.git" 

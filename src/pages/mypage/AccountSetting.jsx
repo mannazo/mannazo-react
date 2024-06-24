@@ -44,14 +44,7 @@ const AccountSetting = () => {
       </div>
       <div>
         <div>
-          <label htmlFor='name'>이름</label>
-          <input
-            id='name'
-            type='text'
-            placeholder='이름(실명)을 입력해주세요'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <label htmlFor='name'>이름 : {userinfo.nickname}</label>
         </div>
         <div>
           <label htmlFor='email'>이메일</label>
