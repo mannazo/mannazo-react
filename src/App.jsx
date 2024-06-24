@@ -1,4 +1,5 @@
 import './App.css';
+import { NextUIProvider } from '@nextui-org/react';
 import { Route, Routes } from 'react-router-dom';
 import * as PATHS from './constants/paths.js';
 import Layout from './components/layouts/Layout.jsx';
@@ -14,11 +15,13 @@ import Local from './pages/Local.jsx';
 import Chat from './pages/Chat.jsx';
 import Sumgocash from './pages/mypage/Sumgocash.jsx';
 import AccountSetting from './pages/mypage/AccountSetting.jsx';
+import Redirection from './pages/Redirection.jsx';
+import MyProfileScreen from './pages/MyProfileScreen.jsx';
 // import Nav from './pages/mypage/Nav.jsx';
 
 function App() {
   return (
-    <>
+    <NextUIProvider>
       <Routes>
         <Route element={<Layout />}>
           <Route path={PATHS.HOME} element={<MainScreen />} />
@@ -38,16 +41,18 @@ function App() {
           <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
           {/*<Route path='/pages/MypageScreen' element={<MypageScreen />} />*/}
           <Route path='/pages/LoginScreen' element={<LoginScreen />} />
+          <Route exact path='/kakao/callback' element={<Redirection />} />
 
           {/*Nav-MypageScreen*/}
           <Route path='/pages/MypageScreen' element={<MypageScreen />}>
             <Route path='Sumgocash' element={<Sumgocash />} />
             <Route path='AccountSetting' element={<AccountSetting />} />
           </Route>
+
           <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
         </Route>
       </Routes>
-    </>
+    </NextUIProvider>
   );
 }
 
