@@ -2,6 +2,7 @@ import '../styles/MypageScreen.css';
 import Nav from './mypage/Nav.jsx';
 import ProfilePhoto from '/profile-photo.png';
 import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
 
 const MypageScreen = () => {
   return (
@@ -10,10 +11,10 @@ const MypageScreen = () => {
         <h1>마이페이지</h1>
       </div>
       <div id='mypage-profile'>
-        <div>
+        <div id='mypage-profile-photo'>
           <img src={ProfilePhoto} alt='profile-photo' />
         </div>
-        <div>
+        <div id='mypage-profile-content'>
           <p>이효정고객님</p>
           <p>lilylee215@gmail.com</p>
         </div>

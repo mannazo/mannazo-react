@@ -3,25 +3,47 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY_URL = "${params.harbor_url}"
-        HARBOR_CREDENTAIL = "${params.harbor_credential}"
+        HARBOR_CREDENTIAL = "${params.harbor_credential}"
         GIT_USER_EMAIL = "${params.git_user_email}"
         GIT_CREDENTIAL = "${params.github_credential}"
     }
 
-    stages {
-        stage('Build Image for mannazo-front-react') {
+    tools {
+        nodejs 'NodeJS-21.4.0' // Jenkins에서 구성한 Node.js 도구 이름 사용
+    }
+
+    stages {        
+
+        stage('Install Dependencies') {
             steps {
-                script {
-                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
-                        def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile .")
-                        customImage.push()
-                    }
-                }
+                // npm 의존성 설치
+                sh 'npm install'
             }
         }
 
+        stage('Build Project') {
+            steps {
+                // 프로젝트 빌드
+                sh 'npm run build'
+            }
+        }
+        // 젠킨스의 빌드 결과물이 dist 디렉토리에 생성됌.
 
+        stage('Build Image for mannazo-front-react') {
+          steps {
+               script {
+                    // build 된 결과물을 ./docker_build로 복사
+                    sh "mkdir -p docker_build"
+                    sh "cp -r $WORKSPACE/dist ./docker_build"  
 
+                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTIAL}") {
+                        def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
+                        customImage.push()
+                 }
+                }
+            }
+        }
+        
         stage('Update Manifests for mannazo-deploy') {
             steps {
                 script { 
@@ -30,14 +52,14 @@ pipeline {
                     def manifestsRepoBranch = 'main'
                     
                     // Checkout manifests repository
-                    git credentialsId: "${HARBOR_CREDENTAIL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
+                    git credentialsId: "${HARBOR_CREDENTIAL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
                     sh """
                         git pull origin main
-                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazo-web.yaml
-                        git add web/mannazo-web.yaml
-                        git config user.name 'DOLONG9'
+                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazu-web.yaml
+                        git add web/mannazu-web.yaml
+                        git config user.name 'DOLONG9' 
                         git config user.email "${GIT_USER_EMAIL}"
-                        git commit -m 'web/mannazo-web.yaml ${currentBuild.number} image versioning'
+                        git commit -m 'web/mannazu-web.yaml ${currentBuild.number} image versioning'
                     """
                     withCredentials([gitUsernamePassword(credentialsId: "${GIT_CREDENTIAL}")]) {
                        sh "git remote set-url origin https://github.com/mannazo/mannazo-deploy.git" 
@@ -45,6 +67,13 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
         }
     }
 }

@@ -12,7 +12,7 @@ const MainScreen = () => {
       <div>
         {/*{newFunction()}*/}
         <div>
-          <h2>쭈니를 찾으러 가볼까요?</h2>
+          <h2>쭈니를 찾으러 가볼까요???????</h2>
           <button onClick={goToTravelSubmissionScreen}>여행자</button>
           <button>쭈니</button>
         </div>
