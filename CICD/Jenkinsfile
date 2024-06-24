@@ -8,13 +8,11 @@ pipeline {
         GIT_CREDENTIAL = "${params.github_credential}"
     }
 
+    tools {
+        nodejs 'NodeJS-21.4.0' // Jenkins에서 구성한 Node.js 도구 이름 사용
+    }
+
     stages {        
-        stage('Setup Node.js') {
-            steps {
-                // Node.js 설치
-                tool name: 'NodeJS-21.4.0', type: 'org.jenkinsci.plugins.nodejs.tools.NodeJSInstallation'
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
