@@ -7,7 +7,7 @@ FROM node:14 as build
 WORKDIR /app
 
 # ./react/package.json, ./react/package-lock.json 파일을 현재 작업 디렉토리 (/app)로 복사! package.json 및 package-lock.json 파일을 기반으로 프로젝트의 모든 종속성을 설치
-COPY ./react/package.json ./react/package-lock.json ./
+COPY ./package.json ./package-lock.json ./
 RUN npm install
 
 # 루트 디렉토리의 모든 파일을 작업 디렉토리 (/app)로 복사하고 React 프로덕션 모드로 빌드해 /app/build 디렉토리에 생성
