@@ -12,6 +12,9 @@ import Signup2Screen from './pages/Signup2Screen.jsx';
 import MypageScreen from './pages/MypageScreen.jsx';
 import Local from './pages/Local.jsx';
 import Chat from './pages/Chat.jsx';
+import Sumgocash from './pages/mypage/Sumgocash.jsx';
+import AccountSetting from './pages/mypage/AccountSetting.jsx';
+// import Nav from './pages/mypage/Nav.jsx';
 
 function App() {
   return (
@@ -33,8 +36,15 @@ function App() {
 
           <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
           <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-          <Route path='/pages/MypageScreen' element={<MypageScreen />} />
+          {/*<Route path='/pages/MypageScreen' element={<MypageScreen />} />*/}
           <Route path='/pages/LoginScreen' element={<LoginScreen />} />
+
+          {/*Nav-MypageScreen*/}
+          <Route path='/pages/MypageScreen' element={<MypageScreen />}>
+            <Route path='Sumgocash' element={<Sumgocash />} />
+            <Route path='AccountSetting' element={<AccountSetting />} />
+          </Route>
+          <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
         </Route>
       </Routes>
     </>

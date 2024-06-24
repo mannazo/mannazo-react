@@ -1,6 +1,7 @@
 import '../styles/MypageScreen.css';
-import Nav from '../components/Nav';
+import Nav from './mypage/Nav.jsx';
 import ProfilePhoto from '/profile-photo.png';
+import { Outlet } from 'react-router-dom';
 
 const MypageScreen = () => {
   return (
@@ -22,7 +23,7 @@ const MypageScreen = () => {
           <Nav />
         </div>
         <div id='mypage-content'>
-          <p>content</p>
+          <Outlet />
         </div>
       </div>
     </>
