@@ -1,4 +1,5 @@
 import './App.css';
+import {NextUIProvider} from "@nextui-org/react";
 import { Route, Routes } from 'react-router-dom';
 import * as PATHS from './constants/paths.js';
 import Layout from './components/layouts/Layout.jsx';
@@ -18,7 +19,7 @@ import AccountSetting from './pages/mypage/AccountSetting.jsx';
 
 function App() {
   return (
-    <>
+    <NextUIProvider>
       <Routes>
         <Route element={<Layout />}>
           <Route path={PATHS.HOME} element={<MainScreen />} />
@@ -47,7 +48,7 @@ function App() {
           <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
         </Route>
       </Routes>
-    </>
+    </NextUIProvider>
   );
 }
 
