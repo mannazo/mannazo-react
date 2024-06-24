@@ -8,7 +8,28 @@ pipeline {
         GIT_CREDENTIAL = "${params.github_credential}"
     }
 
-    stages {
+    stages {        
+        stage('Setup Node.js') {
+            steps {
+                // Node.js 설치
+                tool name: 'NodeJS-21.4.0', type: 'org.jenkinsci.plugins.nodejs.tools.NodeJSInstallation'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // npm 의존성 설치
+                sh 'npm install'
+            }
+        }
+
+        stage('Build Project') {
+            steps {
+                // 프로젝트 빌드
+                sh 'npm run build'
+            }
+        }
+
         stage('Build Image for mannazo-front-react') {
             steps {
                 script {
@@ -19,8 +40,6 @@ pipeline {
                 }
             }
         }
-
-
 
         stage('Update Manifests for mannazo-deploy') {
             steps {
@@ -46,5 +65,13 @@ pipeline {
                 }
             }
         }
+    
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
+        }
+    }
+
     }
 }
