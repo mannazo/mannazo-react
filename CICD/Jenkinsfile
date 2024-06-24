@@ -1,28 +1,49 @@
 pipeline {
     agent any
-    
+
+    environment {
+        DOCKER_REGISTRY_URL = "${params.harbor_url}"
+        HARBOR_CREDENTAIL = "${params.harbor_credential}"
+        GIT_USER_EMAIL = "${params.git_user_email}"
+        GIT_CREDENTIAL = "${params.github_credential}"
+    }
+
     stages {
-        stage('Build') {
+        stage('Build Image for mannazo-front-react') {
             steps {
-                echo 'Building...'
-                // 여기에 빌드 스크립트나 명령어를 추가할 수 있습니다.
-                // 예: sh 'make'
+                script {
+                    docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTAIL}") {
+                        def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile .")
+                        customImage.push()
+                    }
+                }
             }
         }
-        
-        stage('Test') {
+
+
+
+        stage('Update Manifests for mannazo-deploy') {
             steps {
-                echo 'Testing...'
-                // 여기에 테스트 스크립트나 명령어를 추가할 수 있습니다.
-                // 예: sh 'make test'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-                // 여기에 배포 스크립트나 명령어를 추가할 수 있습니다.
-                // 예: sh 'make deploy'
+                script { 
+                    // Git repository information for manifests
+                    def manifestsRepoUrl = 'https://github.com/mannazo/mannazo-deploy.git'
+                    def manifestsRepoBranch = 'main'
+                    
+                    // Checkout manifests repository
+                    git credentialsId: "${HARBOR_CREDENTAIL}", url: manifestsRepoUrl, branch: manifestsRepoBranch
+                    sh """
+                        git pull origin main
+                        sed -i 's|harbor.dorong9.com/mannazo/front-react:.*|harbor.dorong9.com/mannazo/front-react:${env.BUILD_NUMBER}|' web/mannazo-web.yaml
+                        git add web/mannazo-web.yaml
+                        git config user.name 'DOLONG9'
+                        git config user.email "${GIT_USER_EMAIL}"
+                        git commit -m 'web/mannazo-web.yaml ${currentBuild.number} image versioning'
+                    """
+                    withCredentials([gitUsernamePassword(credentialsId: "${GIT_CREDENTIAL}")]) {
+                       sh "git remote set-url origin https://github.com/mannazo/mannazo-deploy.git" 
+                       sh "git push origin main"
+                    }
+                }
             }
         }
     }
