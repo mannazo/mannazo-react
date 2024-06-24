@@ -1,5 +1,4 @@
 import './App.css';
-import { NextUIProvider } from '@nextui-org/react';
 import { Route, Routes } from 'react-router-dom';
 import * as PATHS from './constants/paths.js';
 import Layout from './components/layouts/Layout.jsx';
@@ -51,7 +50,6 @@ function App() {
           <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
         </Route>
       </Routes>
-    </NextUIProvider>
   );
 }
 
