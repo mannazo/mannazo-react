@@ -82,7 +82,7 @@ const AccountSetting = () => {
           <label htmlFor='interests'>흥미: {userinfo.interests}</label>
         </div>
         <button onClick={handleSubmit}>계정변경</button>
-        <p>{JSON.stringify(userInfo)}</p>
+        {/*<p>{JSON.stringify(userInfo)}</p>*/}
       </div>
     </>
   );
