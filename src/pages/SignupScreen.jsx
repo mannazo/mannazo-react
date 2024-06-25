@@ -1,9 +1,6 @@
 import { useState } from 'react';
 
 const SignupScreen = () => {
-  let userinfo = JSON.parse(localStorage.getItem('fetchCodeResponse'));
-  console.log(userinfo);
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +22,7 @@ const SignupScreen = () => {
           id='name'
           type='text'
           placeholder='이름(실명)을 입력해주세요'
-          value={userinfo.nickname}
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
