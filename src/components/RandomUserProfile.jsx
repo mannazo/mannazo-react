@@ -10,12 +10,13 @@ function UserProfileCard({ user }) {
       <CardBody className='p-0'>
         <div className='relative'>
           <Image
+            isBlurred
             src={user.picture.large}
             alt={`${user.name.first} ${user.name.last}`}
-            className='w-full h-[200px] object-cover'
+            className='m-5'
           />
-          <div className='absolute inset-0 bg-black bg-opacity-30 flex items-end p-4'>
-            <div className='text-white text-lg font-bold backdrop-blur-sm bg-white bg-opacity-30 p-2 rounded'>
+          <div className='absolute inset-0 flex items-end bg-black bg-opacity-30 p-4'>
+            <div className='rounded bg-white bg-opacity-30 p-2 text-lg font-bold text-white backdrop-blur-sm'>
               {user.name.first} {user.name.last}, {user.dob.age}
             </div>
           </div>

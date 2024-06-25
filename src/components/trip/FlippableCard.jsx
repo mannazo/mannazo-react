@@ -11,6 +11,7 @@ function FlippableCard({ user }) {
   return (
     <div
       onClick={handleFlip}
+      className='h- w-96'
       style={{
         width: '300px',
         height: '400px',
@@ -74,7 +75,7 @@ function FlippableCard({ user }) {
           }}
         >
           <CardBody>
-            <h4 className='text-lg font-bold mb-2'>
+            <h4 className='mb-2 text-lg font-bold'>
               {user.name.first} {user.name.last}
             </h4>
             <p>Age: {user.dob.age}</p>

@@ -22,10 +22,9 @@ const TripList = () => {
   return (
     <Card>
       <h1>여행 목록을 출력하기 위한 컴포넌트</h1>
-      <h2>랜덤으로 생성된 프로필입니다.</h2>
-      {users.map((user, index) => (
-        <RandomUserProfile key={index} user={user} />
-      ))}
+      {/*{users.map((user, index) => (*/}
+      {/*  <RandomUserProfile key={index} user={user} />*/}
+      {/*))}*/}
       <div
         style={{
           display: 'flex',
