@@ -15,8 +15,9 @@ import Chat from './pages/Chat.jsx';
 import Sumgocash from './pages/mypage/Sumgocash.jsx';
 import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
-import AccountSettingModify from './pages/mypage/AccountSettingModify.jsx'
+import AccountSettingModify from './pages/mypage/AccountSettingModify.jsx';
 import MyProfileScreen from './pages/MyProfileScreen.jsx';
+import CardView from '@/components/trip/CardView.jsx';
 // import Nav from './pages/mypage/Nav.jsx';
 
 function App() {
@@ -27,29 +28,27 @@ function App() {
         <Route path={PATHS.AUTH_SIGN_IN} element={<LoginScreen />} />
         <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
         <Route path={PATHS.SAFETY} element={<Safety />} />
-        <Route path={PATHS.TRIP} element={<TripInfo />}>
-          <Route path={PATHS.TRIP_LIST_BY_LOCATION} element={<TripInfo />} />
-        </Route>
+        <Route path={PATHS.TRIP} element={<CardView />}></Route>
 
         <Route path={PATHS.CHAT} element={<Chat />} />
         <Route path={PATHS.LOCAL} element={<Local />} />
         <Route path={PATHS.PROFILE} />
         <Route path={PATHS.PROFILE_VIEW} />
 
-          <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
-          <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-          <Route path='/pages/LoginScreen' element={<LoginScreen />} />
-          <Route exact path='/kakao/callback' element={<Redirection />} />
+        <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
+        <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
+        <Route path='/pages/LoginScreen' element={<LoginScreen />} />
+        <Route exact path='/kakao/callback' element={<Redirection />} />
 
-          {/*Nav-MypageScreen*/}
-          <Route path='/pages/MypageScreen' element={<MypageScreen />}>
-            <Route path='Sumgocash' element={<Sumgocash />} />
-            <Route path='AccountSetting' element={<AccountSetting />} />
-          </Route>
-
-          <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
+        {/*Nav-MypageScreen*/}
+        <Route path='/pages/MypageScreen' element={<MypageScreen />}>
+          <Route path='Sumgocash' element={<Sumgocash />} />
+          <Route path='AccountSetting' element={<AccountSetting />} />
         </Route>
-      </Routes>
+
+        <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
+      </Route>
+    </Routes>
   );
 }
 
