@@ -7,12 +7,12 @@ const Header = () => {
   return (
     <>
       <header>
-        <nav className='bg-white dark:bg-gray-800  '>
-          <div className='px-8 mx-auto max-w-7xl'>
-            <div className='flex items-center justify-between h-16'>
+        <nav className='bg-white dark:bg-gray-800'>
+          <div className='mx-auto max-w-7xl px-8'>
+            <div className='flex h-16 items-center justify-between'>
               <div className='flex items-center'>
                 <a className='flex-shrink-0' href='/'>
-                  <img className='w-8 h-8' src={Logo} alt='Workflow' />
+                  <img className='h-8 w-8' src={Logo} alt='Workflow' />
                 </a>
                 <Menus />
               </div>
@@ -26,7 +26,7 @@ const Header = () => {
 
 const Menus = () => {
   return (
-    <div className='flex items-baseline ml-10 space-x-4'>
+    <div className='ml-10 flex items-baseline space-x-4'>
       <NavLink to={PATHS.HOME}>Home</NavLink>
       <NavLink to={PATHS.SAFETY}>Safety</NavLink>
       <NavLink to={PATHS.TRIP}>여행자</NavLink>

@@ -15,9 +15,7 @@ import Sumgocash from './pages/mypage/Sumgocash.jsx';
 import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
 import CardView from './components/trip/CardView.jsx';
-import ErrorPage from '@/pages/errors/ErrorPage.jsx';
-// import Nav from './pages/mypage/Nav.jsx';
-import Test from './pages/Test.jsx';
+import ErrorPage from './pages/errors/ErrorPage.jsx';
 
 function App() {
   return (
