@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card } from '@nextui-org/react';
 import { fetchRandomUser } from '../../utils/fetchRandomUser.js';
-import RandomUserProfile from '../RandomUserProfile.jsx';
 import FlippableCard from './FlippableCard.jsx';
 
 const TripList = () => {
