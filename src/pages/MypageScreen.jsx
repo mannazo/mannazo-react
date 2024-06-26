@@ -5,6 +5,9 @@ import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 
 const MypageScreen = () => {
+  // 유저의 데이터를 로컬스토리지에서 가져와서 초기화
+  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem('fetchCodeResponse')));
+
   return (
     <>
       <div id='mypage-h1'>
@@ -15,8 +18,8 @@ const MypageScreen = () => {
           <img src={ProfilePhoto} alt='profile-photo' />
         </div>
         <div id='mypage-profile-content'>
-          <p>이효정고객님</p>
-          <p>lilylee215@gmail.com</p>
+          <div>{userData.name}</div>
+          <div>{userData.email}</div>
         </div>
       </div>
       <div id='mypage-grid1'>
