@@ -9,7 +9,7 @@ import {
   ArrowRightEndOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 import { Link, NavLink } from 'react-router-dom';
-import { MYPAGE } from '@/constants/paths.js';
+import { MYPAGE } from '../constants/paths.js';
 
 const Header = ({ isLoggedIn }) => {
   const [isExpanded, setIsExpanded] = useState(true);

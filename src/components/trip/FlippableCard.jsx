@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 
 function FlippableCard({ user }) {
