@@ -15,11 +15,11 @@ const Redirection = () => {
         console.log(response.data);
         localStorage.setItem('fetchCodeResponse', JSON.stringify(response.data));
           // navigate('/pages/Signup2Screen');
-        // if (response.data.firstTimeUser === true) {
-        //   navigate('/pages/Signup2Screen');
-        // } else {
-        //   navigate('/');
-        // }
+        if (response.data.firstTimeUser === true) {
+          navigate('/pages/Signup2Screen');
+        } else {
+          navigate('/');
+        }
       })
       .catch((error) => {
         console.error('로그인 실패', error);
