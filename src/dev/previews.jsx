@@ -10,6 +10,7 @@ import FlippableCard from '@/components/trip/FlippableCard.jsx';
 import Card from '@/components/trip/Card.jsx';
 import CardGallery from '@/components/trip/CardView.jsx';
 import Header from '@/components/ResponsiveHeader.jsx';
+import Error from '@/pages/errors/Error404.jsx';
 
 const ComponentPreviews = () => {
   return (
@@ -46,6 +47,9 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path='/Header'>
         <Header />
+      </ComponentPreview>
+      <ComponentPreview path='/Error'>
+        <Error />
       </ComponentPreview>
     </Previews>
   );

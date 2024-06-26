@@ -3,17 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   MagnifyingGlassIcon,
   QuestionMarkCircleIcon,
-  Cog6ToothIcon,
+  AdjustmentsHorizontalIcon,
   UserCircleIcon,
   XMarkIcon,
   ArrowRightEndOnRectangleIcon,
 } from '@heroicons/react/24/outline';
+import { Link, NavLink } from 'react-router-dom';
+import { MYPAGE } from '@/constants/paths.js';
 
 const Header = ({ isLoggedIn }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
   const [showHelpMenu, setShowHelpMenu] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const helpMenuRef = useRef(null);
+  const profileMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +33,19 @@ const Header = ({ isLoggedIn }) => {
     const handleClickOutside = (event) => {
       if (helpMenuRef.current && !helpMenuRef.current.contains(event.target)) {
         setShowHelpMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
       }
     };
 
@@ -56,7 +73,7 @@ const Header = ({ isLoggedIn }) => {
       >
         <div className='flex w-full items-center justify-between px-4'>
           <div className='flex items-center'>
-            <a href={'/trip'}>
+            <NavLink to={'/trip'}>
               <motion.img
                 src='/logo.png'
                 alt='Logo'
@@ -65,7 +82,7 @@ const Header = ({ isLoggedIn }) => {
                 }}
                 className='mr-2'
               />
-            </a>
+            </NavLink>
           </div>
 
           <motion.div
@@ -94,9 +111,15 @@ const Header = ({ isLoggedIn }) => {
                         onClick={() => setShowHelpMenu(false)}
                       />
                       <ul className='mt-4'>
-                        <li className='mt-1'>Why Mannazu?</li>
-                        <li className='mt-1'>How it works?</li>
-                        <li className='mt-1'>Safety</li>
+                        <Link to='/about/why'>
+                          <li className='mt-1'>Why Mannazu?</li>
+                        </Link>
+                        <Link to='/about/how-it-works'>
+                          <li className='mt-1'>How it works?</li>
+                        </Link>
+                        <Link to='/about/safety'>
+                          <li className='mt-1'>Safety</li>
+                        </Link>
                       </ul>
                     </div>
                   </motion.div>
@@ -111,7 +134,7 @@ const Header = ({ isLoggedIn }) => {
               />
               <MagnifyingGlassIcon className='absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400' />
             </div>
-            <Cog6ToothIcon
+            <AdjustmentsHorizontalIcon
               className='ml-2 h-6 w-6 cursor-pointer text-gray-600'
               onClick={() => setShowOptions(!showOptions)}
             />
@@ -123,12 +146,38 @@ const Header = ({ isLoggedIn }) => {
             }}
           >
             {isLoggedIn ? (
-              // <img src='/profile.png' alt='Profile' className='h-6 w-6 rounded-full' />
-              <UserCircleIcon className='h-6 w-6 text-gray-600' />
+              <div className='relative' ref={profileMenuRef}>
+                <UserCircleIcon
+                  className='h-6 w-6 cursor-pointer text-gray-600'
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                />
+                <AnimatePresence>
+                  {showProfileMenu && (
+                    <motion.div
+                      className='absolute right-0 top-full mt-2 w-48 rounded-md bg-white p-2 shadow-md'
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                    >
+                      <ul>
+                        <li className='mt-1'>
+                          <Link to={MYPAGE}>My Page</Link>
+                        </li>
+                        <li className='mt-1'>
+                          <Link to='/settings'>Settings</Link>
+                        </li>
+                        <li className='mt-1'>
+                          <Link to='/auth/sign-out'>Log out</Link>
+                        </li>
+                      </ul>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
-              <a href={'/auth/sign-in'}>
+              <Link to={'/auth/sign-in'}>
                 <ArrowRightEndOnRectangleIcon className='h-6 w-6 text-gray-600' />
-              </a>
+              </Link>
             )}
           </motion.div>
         </div>
