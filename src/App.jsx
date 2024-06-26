@@ -45,7 +45,6 @@ function App() {
           <Route path='/pages/MypageScreen' element={<MypageScreen />}>
             <Route path='Sumgocash' element={<Sumgocash />} />
             <Route path='AccountSetting' element={<AccountSetting />} />
-            <Route path='AccountSettingModify' element={<AccountSettingModify />} />
           </Route>
 
           <Route path='/pages/mypage/Nav' element={<MypageScreen />} />
