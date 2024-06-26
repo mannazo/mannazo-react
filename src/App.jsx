@@ -15,7 +15,7 @@ import Chat from './pages/Chat.jsx';
 import Sumgocash from './pages/mypage/Sumgocash.jsx';
 import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
-import AccountSettingModify from './pages/mypage/AccountSettingModify.jsx'
+import AccountSettingModify from './pages/mypage/AccountSettingModify.jsx';
 import MyProfileScreen from './pages/MyProfileScreen.jsx';
 import CardView from './components/trip/CardView.jsx';
 import ErrorPage from '@/pages/errors/ErrorPage.jsx';
@@ -36,10 +36,10 @@ function App() {
         <Route path={PATHS.PROFILE} />
         <Route path={PATHS.PROFILE_VIEW} />
 
-          <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
-          <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
-          <Route path='/pages/LoginScreen' element={<LoginScreen />} />
-          <Route exact path='/kakao/callback' element={<Redirection />} />
+        <Route path='/pages/Signup2Screen' element={<Signup2Screen />} />
+        <Route path='/pages/TravelSubmissionScreen' element={<TravelSubmissionScreen />} />
+        <Route path='/pages/LoginScreen' element={<LoginScreen />} />
+        <Route exact path='/kakao/callback' element={<Redirection />} />
 
         {/*Nav-MypageScreen*/}
         <Route path={PATHS.MYPAGE} element={<MypageScreen />}>
