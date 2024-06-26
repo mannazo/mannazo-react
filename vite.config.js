@@ -9,4 +9,7 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  optimizeDeps: {
+    include: ["@aws-amplify/core", "@aws-amplify/storage"],
+  },
 });

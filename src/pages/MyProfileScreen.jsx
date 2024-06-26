@@ -4,7 +4,7 @@ function TopProfile({ user1 }) {
   return (
     <div className='flex flex-row'>
       <img
-        src='https://picsum.photos/200'
+        src={user1.profileImage}
         alt='User Avatar'
         className='rounded-full w-20 h-20 mr-4'
       />
@@ -45,7 +45,7 @@ function Feedback() {
 }
 
 const MyProfileScreen = () => {
-  let userinfo = JSON.parse(localStorage.getItem('fetchCodeResponse'));
+  const userinfo = JSON.parse(localStorage.getItem('fetchCodeResponse'));
   return (
     <div className='flex flex-col'>
       <TopProfile user1={userinfo}></TopProfile>
