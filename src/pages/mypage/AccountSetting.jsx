@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AccountSettingModify from './AccountSettingModify.jsx';
 import axios from 'axios';
+import { API_SERVER } from '../../constants/paths.js';
 
 const AccountSetting = () => {
   // 사용자가 계정 변경 버튼 눌렀는지에 대한 상태
@@ -19,15 +20,15 @@ const AccountSetting = () => {
 
   useEffect(() => {
     // 로컬스토리지에서 userId 값을 가져옵니다.
-    const userId = JSON.parse(localStorage.getItem('fetchCodeResponse')).user_id;
+    const user = JSON.parse(localStorage.getItem('fetchCodeResponse'));
 
     // userId가 존재하면 데이터를 가져오는 API 요청을 보냅니다.
-    if (userId) {
+    if (user.userId) {
       // 컴포넌트가 마운트될 때 한 번 실행됩니다.
       // 여기서 서버에서 데이터를 가져옵니다.
       const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://api.mannazu.com/api/v1/user/{userDate.userId}'); // 실제 API 엔드포인트로 변경해야 합니다.
+          const response = await axios.get(API_SERVER + '/api/v1/user/' + user.userId); // 실제 API 엔드포인트로 변경해야 합니다.
           setUserData(response.data); // 서버에서 받은 데이터를 상태에 저장합니다.
         } catch (error) {
           console.error('서버에서 사용자 데이터를 가져오는 중 오류 발생:', error);
