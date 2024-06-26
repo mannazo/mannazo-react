@@ -18,6 +18,7 @@ import Redirection from './pages/Redirection.jsx';
 import AccountSettingModify from './pages/mypage/AccountSettingModify.jsx'
 import MyProfileScreen from './pages/MyProfileScreen.jsx';
 // import Nav from './pages/mypage/Nav.jsx';
+import Test from './pages/Test.jsx';
 
 function App() {
   return (
