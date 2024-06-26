@@ -5,6 +5,6 @@ FROM nginx:alpine
 COPY ./dist /usr/share/nginx/html
 
 EXPOSE 80
-
+ 
 # Nginx가 포어그라운드에서 실행되도록 설정하여 Docker 컨테이너가 종료되지 않게
 CMD ["nginx", "-g", "daemon off;"]
