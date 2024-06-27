@@ -1,4 +1,5 @@
-import React from 'react';
+import * as PATHS from '../../constants/paths.js';
+import { Link } from 'react-router-dom';
 
 const ReasonCard = ({ icon, title, description }) => (
   <div className='transform rounded-2xl bg-gradient-to-br from-pink-500 to-orange-400 p-6 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl'>
@@ -66,9 +67,11 @@ const WhyMannazuPage = () => {
             평생 간직할 추억을 만들 수 있는 혁신적인 플랫폼입니다. 진정한 글로벌 시민으로서의 여행을
             경험해보세요.
           </p>
-          <button className='transform rounded-full bg-gradient-to-r from-pink-400 to-yellow-400 px-8 py-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:from-pink-500 hover:to-yellow-500'>
-            지금 바로 mannazu 시작하기
-          </button>
+          <Link to={PATHS.TRIP}>
+            <button className='transform rounded-full bg-gradient-to-r from-pink-400 to-yellow-400 px-8 py-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:from-pink-500 hover:to-yellow-500'>
+              지금 바로 mannazu 시작하기
+            </button>
+          </Link>
         </div>
       </div>
     </div>

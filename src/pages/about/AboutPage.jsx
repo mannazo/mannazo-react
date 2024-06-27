@@ -1,4 +1,5 @@
-import React from 'react';
+import * as PATHS from '../../constants/paths.js';
+import { Link } from 'react-router-dom';
 
 const FeatureCard = ({ icon, title, description }) => (
   <div className='transform rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl'>
@@ -56,9 +57,11 @@ const AboutPage = () => {
             문화의 장벽을 넘어 진정한 글로벌 커뮤니티를 만들어갑니다. 여행은 단순한 관광이 아닌,
             세계를 이해하고 자신을 발견하는 여정이 되어야 한다고 믿습니다.
           </p>
-          <button className='transform rounded-full bg-gradient-to-r from-blue-400 to-purple-600 px-8 py-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:from-blue-500 hover:to-purple-700'>
-            mannazu와 함께 여행하기
-          </button>
+          <Link to={PATHS.TRIP}>
+            <button className='transform rounded-full bg-gradient-to-r from-blue-400 to-purple-600 px-8 py-3 text-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:from-blue-500 hover:to-purple-700'>
+              mannazu와 함께 여행하기
+            </button>
+          </Link>
         </div>
       </div>
     </div>
