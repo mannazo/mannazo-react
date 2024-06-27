@@ -16,7 +16,7 @@ import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
 import CardView from './components/trip/CardView.jsx';
 import ErrorPage from './pages/errors/ErrorPage.jsx';
-import MyProfileScreen from "./pages/MyProfileScreen.jsx";
+import TestCardCall from './components/cards/TestCardCall.jsx';
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
         <Route path={PATHS.AUTH_SIGN_UP_FORM} element={<SignupScreen />} />
         <Route path={PATHS.SAFETY} element={<Safety />} />
         <Route path={PATHS.TRIP} element={<CardView />}></Route>
+        <Route path={'/dev/card'} element={<TestCardCall />}></Route>
 
         <Route path={PATHS.CHAT} element={<Chat />} />
         <Route path={PATHS.LOCAL} element={<Local />} />

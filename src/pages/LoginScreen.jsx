@@ -1,4 +1,3 @@
-import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import Logo from '/vite.svg';
 import axios from 'axios';
@@ -10,10 +9,10 @@ const LoginScreen = () => {
     window.location.href = url;
   };
 
-    // const onNaverButtonClick = async () => {
-    //     const url = await fetchData();
-    //     window.location.href = url;
-    // };
+  // const onNaverButtonClick = async () => {
+  //     const url = await fetchData();
+  //     window.location.href = url;
+  // };
 
   const fetchData = async () => {
     try {
@@ -25,7 +24,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className='flex justify-center items-center flex-col h-screen'>
+    <div className='flex h-screen flex-col items-center justify-center'>
       <div className='p-5'>
         <img src={Logo} />
       </div>
@@ -41,7 +40,13 @@ const LoginScreen = () => {
       </div>
       {/*<button>이메일로 로그인</button>*/}
 
-      <button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg' onClick={onKakaoButtonClick}>KaKao로 시작</button>
+      <button
+        type='button'
+        className='bg-mainColor flex justify-items-center rounded-lg p-3'
+        onClick={onKakaoButtonClick}
+      >
+        KaKao로 시작
+      </button>
       {/*<button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg' onClick={onNaverButtonClick}>네이버로 시작</button>*/}
     </div>
   );
