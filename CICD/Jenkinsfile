@@ -36,6 +36,9 @@ pipeline {
                     sh "mkdir -p docker_build"
                     sh "cp -r $WORKSPACE/dist ./docker_build"  
 
+                    // nginx.conf 파일 복사
+                    sh "cp CICD/nginx.conf ./docker_build/nginx.conf"
+
                     docker.withRegistry("http://${DOCKER_REGISTRY_URL}", "${HARBOR_CREDENTIAL}") {
                         def customImage = docker.build("mannazo/front-react:${env.BUILD_NUMBER}", "-f CICD/Dockerfile ./docker_build")
                         customImage.push()
