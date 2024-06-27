@@ -16,6 +16,7 @@ import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
 import CardView from './components/trip/CardView.jsx';
 import ErrorPage from './pages/errors/ErrorPage.jsx';
+import MyProfileScreen from "./pages/MyProfileScreen.jsx";
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
         <Route exact path='/kakao/callback' element={<Redirection />} />
 
         {/*Nav-MypageScreen*/}
-        <Route path={PATHS.MYPAGE} element={<MypageScreen />}>
+        <Route path={PATHS.MYPAGE} element={<Signup2Screen />}>
           <Route path='Sumgocash' element={<Sumgocash />} />
           <Route path={PATHS.ACCOUNT} element={<AccountSetting />} />
         </Route>

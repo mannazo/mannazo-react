@@ -1,69 +1,137 @@
+import React, { useEffect, useState } from 'react';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { API_SERVER } from '../constants/paths.js';
+import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../constants/inputvalues.jsx';
 
-import {useEffect, useState} from 'react';
-import axios from "axios";
-import {API_SERVER} from "../constants/paths.js";
+import { dotenv } from 'dotenv';
 
-const Signup2Screen = () => {
+// 여기 awsconfig 삽입하시면 됩니다
+
+const s3Client = new S3Client({
+  region: awsConfig.region,
+  credentials: {
+    accessKeyId: awsConfig.accessKeyId,
+    secretAccessKey: awsConfig.secretAccessKey,
+  },
+});
+
+function Signup2Screen() {
   const [error, setError] = useState('');
-  const [storedUserInfo, setStoredUserInfo] = useState(JSON.parse(localStorage.getItem('fetchCodeResponse')));
+  const [storedUserInfo, setStoredUserInfo] = useState(
+    JSON.parse(localStorage.getItem('fetchCodeResponse')),
+  );
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState('');
 
-
-  // useEffect(() => {
-  //   setStoredUserInfo();
-  // }, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Updated:")
-    console.log(storedUserInfo)
-    axios.put(API_SERVER + "/api/v1/user", storedUserInfo)
-        .then(response => console.log(response.data))
-        .catch(error => {
-          console.error(error);
-          if (error.response) {
-
-            console.error('Error:', error.response.data);
-          }
-        });
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
   function handleChange(event) {
     setStoredUserInfo({
       ...storedUserInfo,
-      [event.target.name]:event.target.value
-
-    })
+      [event.target.name]: event.target.value,
+    });
   }
 
+  const uploadImageToS3 = async (file) => {
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    const fileExtension = file.name.split('.').pop();
+    const s3FileName = `${uuidv4()}.${fileExtension}`;
+
+    try {
+      const uploadParams = {
+        Bucket: awsConfig.bucketName,
+        Key: s3FileName,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      const command = new PutObjectCommand(uploadParams);
+      await s3Client.send(command);
+      console.log(`File '${file.name}' uploaded to bucket as '${s3FileName}'`);
+      setUploadedFileName(s3FileName);
+      return s3FileName;
+      // console.log(storedUserInfo);
+    } catch (error) {
+      console.error(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const s3FileName = await uploadImageToS3(selectedFile);
+    console.log(s3FileName);
+    if (s3FileName) {
+      const updatedUserInfo = {
+        ...storedUserInfo,
+        profilePhoto: s3FileName,
+      };
+      console.log(updatedUserInfo);
+      // setStoredUserInfo(updatedUserInfo);
+      //
+      axios
+        .put(API_SERVER + '/api/v1/user', updatedUserInfo)
+        .then((response) => {
+          console.log(response.data.profilePhoto);
+          // setStoredUserInfo({...storedUserInfo, profilePhoto: response.data.profilePhoto})
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response) {
+            console.error('Error:', error.response.data);
+          }
+        });
+    }
+  };
+
   return (
-    <div className='Signup2Form'>
-      <h1>Sign up</h1>
+    <div>
+      <h2>Upload Image to S3</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
-          <input type='text' name="name" required onChange={handleChange}/>
+          <input type='text' name='name' required onChange={handleChange} />
         </div>
-        {/*<div>*/}
-        {/*  <label>Birthday:</label>*/}
-        {/*  <input type='date' required onChange={(e) => setBirthday(e.target.value)}/>*/}
-        {/*</div>*/}
+        <div>
+          <label>Birthday:</label>
+          <input type='date' name='birthday' required onChange={handleChange} />
+        </div>
         <div>
           <label>MBTI</label>
-          <input type='text' name="mbti" onChange={handleChange}/>
+          <select name='mbti' onChange={handleChange}>
+            {MBTI.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Nationality</label>
-          <select name="nationality" onChange={handleChange}>
-            <option value='Korea'>Korea</option>
-            <option value='United States'>United States</option>
+          <select name='nationality' onChange={handleChange}>
+            {NATIONALITY.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </div>
         <div>
           <label>Language</label>
           <select name='language' onChange={handleChange}>
-            <option value='English'>영어</option>
-            <option value='Chinese'>중국어</option>
-            <option value='Korean'>한국어</option>
+            {LANGUAGE.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </div>
         {/*<div>*/}
@@ -72,21 +140,56 @@ const Signup2Screen = () => {
         {/*</div>*/}
         <div>
           <label>Interests</label>
-          <input type='text' name='interests' required onChange={handleChange}/>
+          <div>
+            {INTERESTS.map((value, index) => (
+              // <label key={index}>
+              //   <input type='checkbox' name='interests' value={value} />
+              //   {value}
+              // </label>
+              //         DB interests 가 list type 으로 바뀌었을때 아래 코드로 변환 그리고 div 에 onChange 지움.
+              <label key={index}>
+                <input
+                  type='checkbox'
+                  name='interests'
+                  value={value}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      setStoredUserInfo({
+                        ...storedUserInfo,
+                        interests: [...(storedUserInfo.interests || []), value],
+                      });
+                    } else {
+                      setStoredUserInfo({
+                        ...storedUserInfo,
+                        interests: storedUserInfo.interests.filter((item) => item !== value),
+                      });
+                    }
+                  }}
+                />
+                {value}
+              </label>
+            ))}
+          </div>
         </div>
         <div>
           <label>
             소개글:
-            <textarea name='introduction' required onChange={handleChange}/>
+            <textarea name='introduction' required onChange={handleChange} />
           </label>
         </div>
 
-        <button>회원가입 완료</button>
+        <input type='file' onChange={handleFileChange} />
+        <button type='submit'>Upload</button>
         {error && <div>{error}</div>}
+        {/*{storedUserInfo.profilePhoto && <img src=storedUserInfo.profilePhoto />}*/}
+        {/*{storedUserInfo.profilePhoto && <img*/}
+        {/*    src={`https://mannazo-images-bucket.s3.ap-northeast-2.amazonaws.com/${storedUserInfo.profilePhoto}`}/>}*/}
         <p>{JSON.stringify(storedUserInfo)}</p>
-        {/*<p>{uuid}</p>*/}
       </form>
+      {/*<img src='https://mannazo-images-bucket.s3.ap-northeast-2.amazonaws.com/31b40814-0416-4b62-b231-c7eeeae99762.JPG' />*/}
+      {/*{uploadedFileName && <p>Uploaded file name: {uploadedFileName}</p>}*/}
     </div>
   );
-};
+}
+
 export default Signup2Screen;
