@@ -16,7 +16,7 @@ import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
 import CardView from './components/trip/CardView.jsx';
 import ErrorPage from './pages/errors/ErrorPage.jsx';
-import TestCardCall from '@/components/cards/TestCardCall.jsx';
+import TestCardCall from './components/cards/TestCardCall.jsx';
 
 function App() {
   return (
