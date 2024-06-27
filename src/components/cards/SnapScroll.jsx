@@ -2,9 +2,9 @@ import React from 'react';
 
 const SnapScrollContainer = ({ children }) => {
   return (
-    <div className='h-full snap-y snap-mandatory overflow-y-auto'>
+    <div className='h-screen snap-y snap-mandatory overflow-y-auto'>
       {React.Children.map(children, (child) => (
-        <div className='h-full snap-start'>{child}</div>
+        <div className='h-screen snap-start'>{child}</div>
       ))}
     </div>
   );

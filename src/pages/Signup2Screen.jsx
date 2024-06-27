@@ -7,15 +7,20 @@ import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../constants/inputvalues
 
 import { dotenv } from 'dotenv';
 
-// 여기 awsconfig 삽입하시면 됩니다
-//
-// const s3Client = new S3Client({
-//   region: awsConfig.region,
-//   credentials: {
-//     accessKeyId: awsConfig.accessKeyId,
-//     secretAccessKey: awsConfig.secretAccessKey,
-//   },
-// });
+const awsConfig = {
+  region: import.meta.env.VITE_AWS_REGION,
+  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  bucketName: import.meta.env.VITE_AWS_BUCKET_NAME,
+};
+
+const s3Client = new S3Client({
+  region: awsConfig.region,
+  credentials: {
+    accessKeyId: awsConfig.accessKeyId,
+    secretAccessKey: awsConfig.secretAccessKey,
+  },
+});
 
 function Signup2Screen() {
   const [error, setError] = useState('');
@@ -46,17 +51,17 @@ function Signup2Screen() {
     const s3FileName = `${uuidv4()}.${fileExtension}`;
 
     try {
-      // const uploadParams = {
-      //   Bucket: awsConfig.bucketName,
-      //   Key: s3FileName,
-      //   Body: file,
-      //   ContentType: file.type,
-      // };
-      //
-      // const command = new PutObjectCommand(uploadParams);
-      // await s3Client.send(command);
-      // console.log(`File '${file.name}' uploaded to bucket as '${s3FileName}'`);
-      // setUploadedFileName(s3FileName);
+      const uploadParams = {
+        Bucket: awsConfig.bucketName,
+        Key: s3FileName,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      const command = new PutObjectCommand(uploadParams);
+      await s3Client.send(command);
+      console.log(`File '${file.name}' uploaded to bucket as '${s3FileName}'`);
+      setUploadedFileName(s3FileName);
       return s3FileName;
       // console.log(storedUserInfo);
     } catch (error) {
@@ -72,7 +77,7 @@ function Signup2Screen() {
     if (s3FileName) {
       const updatedUserInfo = {
         ...storedUserInfo,
-        // profilePhoto: s3FileName,
+        profilePhoto: s3FileName,
       };
       console.log(updatedUserInfo);
       // setStoredUserInfo(updatedUserInfo);
@@ -81,7 +86,6 @@ function Signup2Screen() {
         .put(API_SERVER + '/api/v1/user', updatedUserInfo)
         .then((response) => {
           console.log(response.data);
-          // setStoredUserInfo({...storedUserInfo, profilePhoto: response.data.profilePhoto})
         })
         .catch((error) => {
           console.error(error);

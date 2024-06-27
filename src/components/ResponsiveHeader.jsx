@@ -73,7 +73,7 @@ const Header = ({ isLoggedIn }) => {
       >
         <div className='flex w-full items-center justify-between px-4'>
           <div className='flex items-center'>
-            <NavLink to={'/trip'}>
+            <NavLink to={'/about'}>
               <motion.img
                 src='/logo.png'
                 alt='Logo'
@@ -111,6 +111,9 @@ const Header = ({ isLoggedIn }) => {
                         onClick={() => setShowHelpMenu(false)}
                       />
                       <ul className='mt-4'>
+                        <Link to='/about'>
+                          <li className='mt-1'>About Mannazu</li>
+                        </Link>
                         <Link to='/about/why'>
                           <li className='mt-1'>Why Mannazu?</li>
                         </Link>
