@@ -15,19 +15,24 @@ const MypageScreen = () => {
       </div>
       <div id='mypage-profile'>
         <div id='mypage-profile-photo'>
-          <img src={ProfilePhoto} alt='profile-photo' />
+          <img src={userData?.profilePhoto || ProfilePhoto} alt='profile-photo' />
         </div>
+
         <div id='mypage-profile-content'>
           <div>{userData.name}</div>
           <div>{userData.email}</div>
         </div>
       </div>
       <div id='mypage-grid1'>
-        <div id='mypage-nav'>
-          <Nav />
+        <div className='mx-auto w-72 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800'>
+          <div id='mypage-nav'>
+            <Nav />
+          </div>
         </div>
-        <div id='mypage-content'>
-          <Outlet />
+        <div className='mx-auto w-72 rounded-xl bg-white p-4 shadow-lg dark:bg-gray-800'>
+          <div id='mypage-content'>
+            <Outlet />
+          </div>
         </div>
       </div>
     </>

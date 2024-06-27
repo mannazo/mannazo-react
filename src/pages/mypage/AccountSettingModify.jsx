@@ -6,17 +6,17 @@ import { API_SERVER } from '../../constants/paths.js';
 const AccountSettingModify = ({ setIsModifyClicked, userData, setIsComplete }) => {
   const [formData, setFormData] = useState({
     ...userData,
-    name: userData.name || '', // 기본값으로 빈 문자열 설정
-    email: userData.email || '',
-    password: userData.password || '',
-    nickname: userData.nickname || '',
-    nationality: userData.nationality || '',
-    language: userData.language || '',
-    introduction: userData.introduction || '',
-    city: userData.city || '',
-    gender: userData.gender || '',
-    mbti: userData.mbti || '',
-    interests: userData.interests || '',
+    // name: userData.name || '', // 기본값으로 빈 문자열 설정
+    // email: userData.email || '',
+    // password: userData.password || '',
+    // nickname: userData.nickname || '',
+    // nationality: userData.nationality || '',
+    // language: userData.language || '',
+    // introduction: userData.introduction || '',
+    // city: userData.city || '',
+    // gender: userData.gender || '',
+    // mbti: userData.mbti || '',
+    // interests: userData.interests || '',
   });
 
   const handleChange = (e) => {
@@ -33,8 +33,14 @@ const AccountSettingModify = ({ setIsModifyClicked, userData, setIsComplete }) =
       // 서버 API 엔드포인트
       const apiUrl = API_SERVER + '/api/v1/user';
 
+      console.log('보내는 데이터:', formData);
+
       // API 요청 보낼 데이터
-      const response = await axios.put(apiUrl, formData);
+      const response = await axios.put(apiUrl, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       // 요청이 성공적으로 처리된 경우
       console.log('서버 응답:', response.data);
@@ -46,6 +52,9 @@ const AccountSettingModify = ({ setIsModifyClicked, userData, setIsComplete }) =
       // 요청이 실패한 경우
       console.error('서버 요청 중 오류 발생:', error);
       // 오류 처리 (예: 사용자에게 알림 등)
+      if (error.response) {
+        console.error('서버 응답 데이터:', error.response.data);
+      }
     }
   };
 
@@ -101,12 +110,6 @@ const AccountSettingModify = ({ setIsModifyClicked, userData, setIsComplete }) =
         <input type='text' id='interests' value={formData.interests} onChange={handleChange} />
       </div>
       <button onClick={handleSave}>완료</button>
-
-      {/*<button onClick={() => {*/}
-      {/*    setIsModifyClicked(false);*/}
-      {/*    setIscomplite(true);*/}
-      {/*}}>완료*/}
-      {/*</button>*/}
     </>
   );
 };
