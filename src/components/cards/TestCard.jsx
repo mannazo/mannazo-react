@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Flag 컴포넌트
@@ -51,7 +51,7 @@ const ChatModal = ({ onClose, onSend }) => {
   };
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+    <div className='chat-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
       <div className='w-80 rounded-lg bg-white p-4'>
         <textarea
           className='mb-2 w-full rounded border p-2'
@@ -81,7 +81,7 @@ const Card = ({ userData }) => {
   const navigate = useNavigate();
 
   const handleCardClick = (e) => {
-    if (!e.target.closest('.action-button')) {
+    if (!e.target.closest('.action-button') && !e.target.closest('.chat-modal')) {
       setIsExpanded(!isExpanded);
     }
   };
@@ -142,7 +142,7 @@ const Card = ({ userData }) => {
 };
 
 const CardHeader = ({ userData, onMenuClick }) => (
-  <div className='flex items-start justify-between'>
+  <div className='flex items-start justify-between rounded bg-black bg-opacity-50 p-2'>
     <div className='flex items-center'>
       <Flag country={userData.country} />
       <div className='ml-2'>
