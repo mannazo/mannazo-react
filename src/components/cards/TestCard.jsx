@@ -31,10 +31,13 @@ const MenuIcon = () => (
 );
 
 // DropdownMenu 컴포넌트
-const DropdownMenu = () => (
-  <div className='absolute right-0 z-10 mt-2 w-48 rounded-md bg-white shadow-lg'>
+const DropdownMenu = ({ onReport }) => (
+  <div className='absolute right-0 top-full z-10 mt-2 w-auto rounded-md bg-white shadow-lg'>
     <div className='py-1'>
-      <button className='block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100'>
+      <button
+        className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+        onClick={onReport}
+      >
         신고하기
       </button>
     </div>
@@ -102,11 +105,52 @@ const ScrollableTags = ({ interestTags, languageTags }) => (
   </>
 );
 
+// 신고하기 모달 컴포넌트
+const ReportModal = ({ onClose, onSubmit }) => {
+  const [report, setReport] = useState('');
+
+  const handleSubmit = () => {
+    onSubmit(report);
+    setReport('');
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <div
+      className='report-modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
+      onClick={handleModalClick}
+    >
+      <div className='w-80 rounded-lg bg-white p-4'>
+        <h2 className='mb-4 text-lg font-bold'>신고하기</h2>
+        <textarea
+          className='mb-2 w-full rounded border p-2'
+          value={report}
+          onChange={(e) => setReport(e.target.value)}
+          placeholder='무엇이 문제인가요?'
+          rows={4}
+        />
+        <div className='flex justify-end'>
+          <button className='mr-2 rounded bg-red-500 px-4 py-2 text-white' onClick={handleSubmit}>
+            제출
+          </button>
+          <button className='rounded bg-gray-300 px-4 py-2' onClick={onClose}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Card = ({ userData }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isChatRequested, setIsChatRequested] = useState(false);
   const [showChatModal, setShowChatModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -137,6 +181,18 @@ const Card = ({ userData }) => {
     // 여기에 채팅 요청 로직 추가
   };
 
+  const handleReportClick = (e) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    setShowReportModal(true);
+  };
+
+  const handleReportSubmit = (report) => {
+    // 여기에 신고 처리 로직을 추가합니다.
+    console.log('신고 내용:', report);
+    setShowReportModal(false);
+  };
+
   return (
     <div
       className='relative h-[600px] w-full cursor-pointer overflow-hidden rounded-lg'
@@ -149,7 +205,12 @@ const Card = ({ userData }) => {
       {isExpanded && <div className='absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm' />}
 
       <div className='relative flex h-full flex-col justify-between p-4'>
-        <CardHeader userData={userData} onMenuClick={handleMenuClick} />
+        <CardHeader
+          userData={userData}
+          onMenuClick={handleMenuClick}
+          isMenuOpen={isMenuOpen}
+          onReport={handleReportClick}
+        />
         <CardFooter userData={userData} />
 
         {isExpanded && (
@@ -162,17 +223,19 @@ const Card = ({ userData }) => {
         )}
       </div>
 
-      {isMenuOpen && <DropdownMenu />}
-
       {showChatModal && (
         <ChatModal onClose={() => setShowChatModal(false)} onSend={handleChatRequest} />
+      )}
+
+      {showReportModal && (
+        <ReportModal onClose={() => setShowReportModal(false)} onSubmit={handleReportSubmit} />
       )}
     </div>
   );
 };
 
-const CardHeader = ({ userData, onMenuClick }) => (
-  <div className='flex items-start justify-between rounded bg-black bg-opacity-50 p-2'>
+const CardHeader = ({ userData, onMenuClick, isMenuOpen, onReport }) => (
+  <div className='relative flex items-start justify-between rounded bg-black bg-opacity-50 p-2'>
     <div className='flex content-center items-center'>
       <Flag country={userData.country} />
       <div className='ml-2'>
@@ -183,6 +246,7 @@ const CardHeader = ({ userData, onMenuClick }) => (
     <button onClick={onMenuClick} className='h-full text-white'>
       <MenuIcon />
     </button>
+    {isMenuOpen && <DropdownMenu onReport={onReport} />}
   </div>
 );
 
