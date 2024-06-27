@@ -190,7 +190,7 @@ const Header = ({ isLoggedIn }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              <div className='relative p-4'>
+              <div className='relative flex items-center justify-between p-4'>
                 <XMarkIcon
                   className='absolute right-2 top-2 h-6 w-6 cursor-pointer text-gray-600'
                   onClick={() => setShowOptions(false)}
