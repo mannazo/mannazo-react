@@ -7,15 +7,22 @@ import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../constants/inputvalues
 
 import { dotenv } from 'dotenv';
 
-// 여기 awsconfig 삽입하시면 됩니다
-//
-// const s3Client = new S3Client({
-//   region: awsConfig.region,
-//   credentials: {
-//     accessKeyId: awsConfig.accessKeyId,
-//     secretAccessKey: awsConfig.secretAccessKey,
-//   },
-// });
+
+const awsConfig = {
+  region: import.meta.env.VITE_AWS_REGION,
+  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  bucketName: import.meta.env.VITE_AWS_BUCKET_NAME,
+};
+
+const s3Client = new S3Client({
+  region: awsConfig.region,
+  credentials: {
+    accessKeyId: awsConfig.accessKeyId,
+    secretAccessKey: awsConfig.secretAccessKey,
+  },
+});
+
 
 function Signup2Screen() {
   const [error, setError] = useState('');
