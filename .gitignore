@@ -24,4 +24,3 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
-/src/dev/
