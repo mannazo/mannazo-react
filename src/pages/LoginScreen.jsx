@@ -1,29 +1,30 @@
-import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import Logo from '/vite.svg';
 import axios from 'axios';
 import { API_SERVER } from '../constants/paths.js';
 
 const LoginScreen = () => {
-  const openPopup = (url) => {
-    window.open(url, 'newWindow', 'width=800, height=600');
+  const onKakaoButtonClick = async () => {
+    const url = await fetchData();
+    window.location.href = url;
   };
+
+  // const onNaverButtonClick = async () => {
+  //     const url = await fetchData();
+  //     window.location.href = url;
+  // };
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_SERVER + '/login/kakao');
+      const response = await axios.get(API_SERVER + '/login/kakao/auth');
       return response.data;
     } catch (error) {
       console.error(`Error fetching data: ${error}`);
     }
   };
 
-  const onKakaoButtonClick = async () => {
-    const url = await fetchData();
-    openPopup(url);
-  };
   return (
-    <div className='flex justify-center items-center flex-col h-screen'>
+    <div className='flex h-screen flex-col items-center justify-center'>
       <div className='p-5'>
         <img src={Logo} />
       </div>
@@ -37,16 +38,16 @@ const LoginScreen = () => {
         <label htmlFor='password'>비밀번호</label>
         <input id='password' name='password' type='password' />
       </div>
-      <button>이메일로 로그인</button>
-      <div className='shadow-2xl'>
-        <button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg'>
-          <FcGoogle className='mr-4' />
-          Sign in
-        </button>
-      </div>
+      {/*<button>이메일로 로그인</button>*/}
 
-      <button onClick={onKakaoButtonClick}>KaKao</button>
-      <button>네이버로 시작</button>
+      <button
+        type='button'
+        className='bg-mainColor flex justify-items-center rounded-lg p-3'
+        onClick={onKakaoButtonClick}
+      >
+        KaKao로 시작
+      </button>
+      {/*<button type='button' className='bg-mainColor flex justify-items-center p-3 rounded-lg' onClick={onNaverButtonClick}>네이버로 시작</button>*/}
     </div>
   );
 };

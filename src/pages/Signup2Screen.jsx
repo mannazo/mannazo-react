@@ -1,97 +1,199 @@
-// {
-//   "nationality": "integer",
-//   "language": "string",
-//   "profile_photo": "string",
-//   "bio": "string",
-//   "residence": "string",
-//   "role": "string",
-// }
-const Signup2Screen = () => {
+import React, { useEffect, useState } from 'react';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { API_SERVER } from '../constants/paths.js';
+import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../constants/inputvalues.jsx';
+
+import { dotenv } from 'dotenv';
+
+const awsConfig = {
+  region: import.meta.env.VITE_AWS_REGION,
+  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  bucketName: import.meta.env.VITE_AWS_BUCKET_NAME,
+};
+
+const s3Client = new S3Client({
+  region: awsConfig.region,
+  credentials: {
+    accessKeyId: awsConfig.accessKeyId,
+    secretAccessKey: awsConfig.secretAccessKey,
+  },
+});
+
+function Signup2Screen() {
+  const [error, setError] = useState('');
+  const [storedUserInfo, setStoredUserInfo] = useState(
+    JSON.parse(localStorage.getItem('fetchCodeResponse')),
+  );
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState('');
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  function handleChange(event) {
+    setStoredUserInfo({
+      ...storedUserInfo,
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  const uploadImageToS3 = async (file) => {
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    const fileExtension = file.name.split('.').pop();
+    const s3FileName = `${uuidv4()}.${fileExtension}`;
+
+    try {
+      const uploadParams = {
+        Bucket: awsConfig.bucketName,
+        Key: s3FileName,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      const command = new PutObjectCommand(uploadParams);
+      await s3Client.send(command);
+      console.log(`File '${file.name}' uploaded to bucket as '${s3FileName}'`);
+      setUploadedFileName(s3FileName);
+      return s3FileName;
+      // console.log(storedUserInfo);
+    } catch (error) {
+      console.error(`An error occurred: ${error.message}`);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const s3FileName = await uploadImageToS3(selectedFile);
+    console.log(s3FileName);
+    if (s3FileName) {
+      const updatedUserInfo = {
+        ...storedUserInfo,
+        profilePhoto: s3FileName,
+      };
+      console.log(updatedUserInfo);
+      // setStoredUserInfo(updatedUserInfo);
+      //
+      axios
+        .put(API_SERVER + '/api/v1/user', updatedUserInfo)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response) {
+            console.error('Error:', error.response.data);
+          }
+        });
+    }
+  };
+
   return (
     <div>
-      <h1>Signup2Screen.tsx</h1>
-      <form>
+      <h2>Upload Image to S3</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label>
-            Birthday:
-            <select name='year'>
-              <option value=''>Select year of Birth</option>
-              <option value='2000'>2000</option>
-              <option value='1999'>1999</option>
-              <option value='1998'>1998</option>
-              <option value='1997'>1997</option>
-              <option value='1996'>1996</option>
-              <option value='1996'>...</option>
-            </select>
-            <select name='Month'>
-              <option value=''>Select month of Birth</option>
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
-              <option value='11'>11</option>
-              <option value='12'>12</option>
-            </select>
-          </label>
+          <label>Name:</label>
+          <input type='text' name='name' required onChange={handleChange} />
+        </div>
+        <div>
+          <label>Birthday:</label>
+          <input type='date' name='birthday' required onChange={handleChange} />
         </div>
         <div>
           <label>MBTI</label>
-          <select name='mbti'>
-            <option value=''>MBTI</option>
-            <option value='1'>ENFP</option>
-            <option value='2'>ENFJ</option>
-            <option value='3'>ENTP</option>
-            <option value='4'>ENTJ</option>
-            <option value='5'>ESFP</option>
-            <option value='6'>ESTP</option>
-            <option value='7'>ESFJ</option>
-            <option value='8'>ESTJ</option>
-            <option value='9'>INFP</option>
-            <option value='10'>...</option>
+          <select name='mbti' onChange={handleChange}>
+            {MBTI.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </div>
         <div>
-          <label>거주지역</label>
-          <select name='MBTI'>
-            <option value=''>...</option>
+          <label>Nationality</label>
+          <select name='nationality' onChange={handleChange}>
+            {NATIONALITY.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </div>
         <div>
-          <label>언어</label>
-          <select name='mbti'>
-            <option value=''>영어</option>
-            <option value=''>중국어</option>
-            <option value=''>한국어</option>
+          <label>Language</label>
+          <select name='language' onChange={handleChange}>
+            {LANGUAGE.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </div>
-        <div>
-          <label>이미지</label>
-          <input type='file' name='profilePhoto' />
-        </div>
+        {/*<div>*/}
+        {/*  <label>이미지</label>*/}
+        {/*  <input type='file' name='profilePhoto' onChange={handleImage}/>*/}
+        {/*</div>*/}
         <div>
           <label>Interests</label>
-          <select name='interests'>
-            <option value=''>Food</option>
-            {/* <option value="">Tour</option> */}
-            <option value=''>...</option>
-          </select>
+          <div>
+            {INTERESTS.map((value, index) => (
+              // <label key={index}>
+              //   <input type='checkbox' name='interests' value={value} />
+              //   {value}
+              // </label>
+              //         DB interests 가 list type 으로 바뀌었을때 아래 코드로 변환 그리고 div 에 onChange 지움.
+              <label key={index}>
+                <input
+                  type='checkbox'
+                  name='interests'
+                  value={value}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      setStoredUserInfo({
+                        ...storedUserInfo,
+                        interests: [...(storedUserInfo.interests || []), value],
+                      });
+                    } else {
+                      setStoredUserInfo({
+                        ...storedUserInfo,
+                        interests: storedUserInfo.interests.filter((item) => item !== value),
+                      });
+                    }
+                  }}
+                />
+                {value}
+              </label>
+            ))}
+          </div>
         </div>
         <div>
           <label>
             소개글:
-            <textarea name='introduction' />
+            <textarea name='introduction' required onChange={handleChange} />
           </label>
         </div>
 
-        <button>회원가입 완료</button>
+        <input type='file' onChange={handleFileChange} />
+        <button type='submit'>Upload</button>
+        {error && <div>{error}</div>}
+        {/*{storedUserInfo.profilePhoto && <img src=storedUserInfo.profilePhoto />}*/}
+        {/*{storedUserInfo.profilePhoto && <img*/}
+        {/*    src={`https://mannazo-images-bucket.s3.ap-northeast-2.amazonaws.com/${storedUserInfo.profilePhoto}`}/>}*/}
+        <p>{JSON.stringify(storedUserInfo)}</p>
       </form>
+      {/*<img src='https://mannazo-images-bucket.s3.ap-northeast-2.amazonaws.com/31b40814-0416-4b62-b231-c7eeeae99762.JPG' />*/}
+      {/*{uploadedFileName && <p>Uploaded file name: {uploadedFileName}</p>}*/}
     </div>
   );
-};
+}
+
 export default Signup2Screen;

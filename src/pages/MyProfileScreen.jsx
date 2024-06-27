@@ -1,42 +1,20 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get('https://mannazo.diligentp.com/login/kakao');
-    console.log(response.data.body);
-  } catch (error) {
-    console.error(`Error fetching data: ${error}`);
-  }
-};
-function Profile() {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios
-      .get('https://mannazo.diligentp.com/api/v1/user/c0564f5b-9db4-4e3a-86ee-939a508fad73')
-      .then((response) => setUser(response.data))
-      .catch((error) => console.error('Error:', error));
-  }, []);
-  return !user ? (
-    'Loading...'
-  ) : (
-    <div className='flex flex-col'>
-      <div className='flex flex-row'>
-        <img
-          src='https://picsum.photos/200'
-          alt='User Avatar'
-          className='rounded-full w-20 h-20 mr-4'
-        />
-        <div>
-          <h1>{user.name}</h1>
-          <ul>
-            <li>{user.nationality}</li>
-            <li>{user.lastLoginAt}</li>
-          </ul>
-        </div>
+function TopProfile({ user1 }) {
+  return (
+    <div className='flex flex-row'>
+      <img
+        src={user1.profileImage}
+        alt='User Avatar'
+        className='rounded-full w-20 h-20 mr-4'
+      />
+      <div>
+        <h1>{user1.name}</h1>
+        <ul>
+          <li>{user1.nationality}</li>
+          <li>{user1.lastLoginAt}</li>
+        </ul>
       </div>
-
-      <Overview user1={user}></Overview>
     </div>
   );
 }
@@ -67,24 +45,11 @@ function Feedback() {
 }
 
 const MyProfileScreen = () => {
-  const [mode, setMode] = useState('Overview');
-  let content = null;
-  if (mode === 'Overview') {
-    content = <Overview></Overview>;
-  } else if (mode === 'Feedback') {
-    content = <Feedback></Feedback>;
-  }
-
+  const userinfo = JSON.parse(localStorage.getItem('fetchCodeResponse'));
   return (
-    <div>
-      <div>
-        <Profile></Profile>
-      </div>
-      <div>
-        <div>
-          <h1>ad</h1>
-        </div>
-      </div>
+    <div className='flex flex-col'>
+      <TopProfile user1={userinfo}></TopProfile>
+      <Overview user1={userinfo}></Overview>
     </div>
   );
 };

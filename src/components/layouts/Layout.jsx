@@ -1,15 +1,21 @@
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../Header.jsx';
-import Footer from '../Footer.jsx';
+import Header from '../ResponsiveHeader.jsx';
 
 const Layout = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const fetchCodeResponse = JSON.parse(localStorage.getItem('fetchCodeResponse'));
+    setLoggedIn(fetchCodeResponse !== null);
+  }, []);
+
   return (
-    <div className='min-h-screen flex flex-col'>
-      <Header></Header>
-      <main className='flex-grow'>
+    <div className='flex h-screen flex-col overflow-hidden'>
+      <Header isLoggedIn={loggedIn} />
+      <main className='flex-grow overflow-auto'>
         <Outlet />
       </main>
-      <Footer></Footer>
     </div>
   );
 };
