@@ -201,7 +201,7 @@ const Card = ({ userData }) => {
       <div
         className='absolute inset-0 bg-cover bg-center transition-opacity duration-300'
         style={{
-          backgroundImage: `url(https://media.npr.org/assets/news/2010/04/13/helenconnors-1d8f1a06d1b4fdd6ad260e8726be490bec5bd541.jpg?s=1100&c=50&f=jpeg)`,
+          backgroundImage: `url(https://thispersondoesnotexist.com/)`,
         }}
       />
       {isExpanded && <div className='absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm' />}
