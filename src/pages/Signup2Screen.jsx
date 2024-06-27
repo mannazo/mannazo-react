@@ -72,7 +72,7 @@ function Signup2Screen() {
     if (s3FileName) {
       const updatedUserInfo = {
         ...storedUserInfo,
-        profilePhoto: s3FileName,
+        // profilePhoto: s3FileName,
       };
       console.log(updatedUserInfo);
       // setStoredUserInfo(updatedUserInfo);
@@ -80,7 +80,7 @@ function Signup2Screen() {
       axios
         .put(API_SERVER + '/api/v1/user', updatedUserInfo)
         .then((response) => {
-          console.log(response.data.profilePhoto);
+          console.log(response.data);
           // setStoredUserInfo({...storedUserInfo, profilePhoto: response.data.profilePhoto})
         })
         .catch((error) => {
