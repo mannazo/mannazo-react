@@ -16,6 +16,10 @@ const AccountSetting = () => {
 
   const [isComplete, setIsComplete] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState(null);
+
   console.log(userData);
 
   useEffect(() => {
@@ -23,24 +27,38 @@ const AccountSetting = () => {
     const user = JSON.parse(localStorage.getItem('fetchCodeResponse'));
 
     // userId가 존재하면 데이터를 가져오는 API 요청을 보냅니다.
-    if (user.userId) {
+    if (user && user.userId) {
       // 컴포넌트가 마운트될 때 한 번 실행됩니다.
       // 여기서 서버에서 데이터를 가져옵니다.
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(API_SERVER + '/api/v1/user/' + user.userId); // 실제 API 엔드포인트로 변경해야 합니다.
+          const response = await axios.get('${API_SERVER}/api/v1/user/${user.userId}'); // 실제 API 엔드포인트로 변경해야 합니다.
           setUserData(response.data); // 서버에서 받은 데이터를 상태에 저장합니다.
         } catch (error) {
+          setError('서버에서 사용자 데이터를 가져오는 중 오류 발생');
           console.error('서버에서 사용자 데이터를 가져오는 중 오류 발생:', error);
           // 오류 처리 (예: 사용자에게 오류 메시지 표시)
+        } finally {
+          setLoading(false);
         }
       };
 
       fetchUserData(); // 데이터 가져오기 함수 호출
+    } else {
+      setError('사용자 정보가 로컬스토리지에 없습니다.');
+      setLoading(false);
     }
 
     // 로컬 스토리지에서 데이터를 가져오는 것과는 달리 비동기 함수를 사용하여 서버에서 데이터를 가져옵니다.
   }, []); // 빈 배열을 전달하여 한 번만 실행되도록 설정합니다.
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   console.log(userData);
 
