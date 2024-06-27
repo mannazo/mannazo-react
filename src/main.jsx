@@ -8,13 +8,13 @@ import { ComponentPreviews, useInitial } from './dev/index.js';
 import { NextUIProvider } from '@nextui-org/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <NextUIProvider>
-      <BrowserRouter>
-        <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-          <App />
-        </DevSupport>
-      </BrowserRouter>
-    </NextUIProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <NextUIProvider>
+    <BrowserRouter>
+      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+        <App />
+      </DevSupport>
+    </BrowserRouter>
+  </NextUIProvider>,
+  // </React.StrictMode>,
 );

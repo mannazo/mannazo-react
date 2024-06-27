@@ -35,9 +35,10 @@ function Signup2Screen() {
   };
 
   function handleChange(event) {
+    const { name, value } = e.target;
     setStoredUserInfo({
       ...storedUserInfo,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   }
 
