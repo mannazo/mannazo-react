@@ -23,7 +23,7 @@ const PersonalInfo = ({ name, age, gender }) => (
 
 // MenuIcon 컴포넌트
 const MenuIcon = () => (
-  <div className='flex h-6 w-6 flex-col items-center justify-center'>
+  <div className='flex h-full w-6 flex-col items-center justify-center'>
     <div className='mb-1 h-1 w-1 rounded-full bg-white'></div>
     <div className='mb-1 h-1 w-1 rounded-full bg-white'></div>
     <div className='h-1 w-1 rounded-full bg-white'></div>
@@ -72,6 +72,36 @@ const ChatModal = ({ onClose, onSend }) => {
   );
 };
 
+// ScrollableTags 컴포넌트 (태그들을 수평으로 스크롤하여 추가정보 조회하기 위함)
+const ScrollableTags = ({ interestTags, languageTags }) => (
+  <>
+    <div className='mb-4 flex justify-center overflow-x-auto whitespace-nowrap scrollbar-hide'>
+      <div className='inline-flex space-x-2'>
+        {interestTags.map((tag, index) => (
+          <span
+            key={`interest-${index}`}
+            className='rounded-full bg-gray-200 px-2 py-1 text-sm text-gray-700'
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+    <div className='scrollbar-thin mb-4 flex justify-center overflow-x-auto whitespace-nowrap'>
+      <div className='inline-flex space-x-2'>
+        {languageTags.map((lang, index) => (
+          <span
+            key={`lang-${index}`}
+            className='rounded-full bg-blue-200 px-2 py-1 text-sm text-blue-700'
+          >
+            {lang}
+          </span>
+        ))}
+      </div>
+    </div>
+  </>
+);
+
 const Card = ({ userData }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -109,7 +139,7 @@ const Card = ({ userData }) => {
 
   return (
     <div
-      className='relative h-[800px] w-full cursor-pointer overflow-hidden rounded-lg'
+      className='relative h-[600px] w-full cursor-pointer overflow-hidden rounded-lg'
       onClick={handleCardClick}
     >
       <div
@@ -143,14 +173,14 @@ const Card = ({ userData }) => {
 
 const CardHeader = ({ userData, onMenuClick }) => (
   <div className='flex items-start justify-between rounded bg-black bg-opacity-50 p-2'>
-    <div className='flex items-center'>
+    <div className='flex content-center items-center'>
       <Flag country={userData.country} />
       <div className='ml-2'>
         <Rating value={userData.rating} />
         <PersonalInfo name={userData.name} age={userData.age} gender={userData.gender} />
       </div>
     </div>
-    <button onClick={onMenuClick} className='text-white'>
+    <button onClick={onMenuClick} className='h-full text-white'>
       <MenuIcon />
     </button>
   </div>
@@ -159,15 +189,16 @@ const CardHeader = ({ userData, onMenuClick }) => (
 const CardFooter = ({ userData }) => (
   <div className='flex items-center rounded bg-black bg-opacity-50 p-2'>
     <Flag country={userData.destination} />
-    <div className='ml-2 text-white'>
+    <div className='ml-4 flex-grow items-center text-white'>
       {userData.destinationDate} / {userData.destinationCity}
     </div>
   </div>
 );
 
 const CardContent = ({ userData, onProfileClick, onChatClick, isChatRequested }) => (
-  <div className='text-white'>
-    <p className='mb-4'>{userData.message}</p>
+  <div className='flex flex-grow flex-col text-white'>
+    <p className='mb-4 flex-grow content-center'>{userData.message}</p>
+    <ScrollableTags interestTags={userData.interests} languageTags={userData.languages} />
     <div className='flex items-end justify-between'>
       <button onClick={onProfileClick} className='action-button'>
         <img src='https://placehold.co/40x40' alt='Profile' className='h-10 w-10 rounded-full' />

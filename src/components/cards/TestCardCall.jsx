@@ -14,6 +14,8 @@ const TestCardCall = () => {
     destinationCity: 'Seoul',
     message:
       "Hello, remote buddy! I'm talkative Yuki 🙂 It's my first time to go S.Korea! 안녕하세요! I'd like to have some local food and go to K-POP concert! Anyone friendly welcome. Only chat also OK.",
+    interests: ['음식', 'K-POP', '콘서트', '음식', 'K-POP', '콘서트', '음식', 'K-POP', '콘서트'],
+    languages: ['KOR', 'ENG', 'JPN'],
   };
 
   return (
