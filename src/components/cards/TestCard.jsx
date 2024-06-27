@@ -16,7 +16,7 @@ const Rating = ({ value }) => (
 
 // PersonalInfo 컴포넌트
 const PersonalInfo = ({ name, age, gender }) => (
-  <div className='text-sm text-white'>
+  <div className='text-center text-sm text-white'>
     {name} ({age}, {gender})
   </div>
 );
@@ -124,7 +124,7 @@ const ReportModal = ({ onClose, onSubmit }) => {
       onClick={handleModalClick}
     >
       <div className='w-80 rounded-lg bg-white p-4'>
-        <h2 className='mb-4 text-lg font-bold'>신고하기</h2>
+        <h2 className='mb-4 text-center text-lg font-bold'>신고하기</h2>
         <textarea
           className='mb-2 w-full rounded border p-2'
           value={report}
@@ -238,10 +238,10 @@ const CardHeader = ({ userData, onMenuClick, isMenuOpen, onReport }) => (
   <div className='relative flex items-start justify-between rounded bg-black bg-opacity-50 p-2'>
     <div className='flex content-center items-center'>
       <Flag country={userData.country} />
-      <div className='ml-2'>
-        <Rating value={userData.rating} />
-        <PersonalInfo name={userData.name} age={userData.age} gender={userData.gender} />
-      </div>
+    </div>
+    <div className='ml-2'>
+      <Rating value={userData.rating} />
+      <PersonalInfo name={userData.name} age={userData.age} gender={userData.gender} />
     </div>
     <button onClick={onMenuClick} className='h-full text-white'>
       <MenuIcon />
@@ -253,7 +253,7 @@ const CardHeader = ({ userData, onMenuClick, isMenuOpen, onReport }) => (
 const CardFooter = ({ userData }) => (
   <div className='flex items-center rounded bg-black bg-opacity-50 p-2'>
     <Flag country={userData.destination} />
-    <div className='ml-4 flex-grow items-center text-white'>
+    <div className='ml-4 flex-grow items-center text-center text-white'>
       {userData.destinationDate} / {userData.destinationCity}
     </div>
   </div>
