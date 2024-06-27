@@ -1,7 +1,7 @@
-import TestCard from './TestCard.jsx';
+import TestCard from './TravellerCard.jsx';
 import SnapScrollContainer from './SnapScroll.jsx';
 
-const TestCardCall = () => {
+const TravellerCardFeed = () => {
   const userData = {
     id: 1,
     name: 'Yuki',
@@ -42,4 +42,4 @@ const TestCardCall = () => {
   );
 };
 
-export default TestCardCall;
+export default TravellerCardFeed;
