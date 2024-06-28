@@ -14,7 +14,8 @@ const Redirection = () => {
       .then((response) => {
         console.log(response.data);
         localStorage.setItem('fetchCodeResponse', JSON.stringify(response.data));
-          // navigate('/pages/Signup2Screen');
+        console.log(localStorage.getItem('fetchCodeResponse'));
+        // navigate('/pages/Signup2Screen');
         if (response.data.firstTimeUser === true) {
           navigate('/pages/Signup2Screen');
         } else {
