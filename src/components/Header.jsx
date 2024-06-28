@@ -10,14 +10,16 @@ import {
 } from '@heroicons/react/24/outline';
 import { Link, NavLink } from 'react-router-dom';
 import { MYPAGE } from '../constants/paths.js';
+import { useAuth } from '@/hooks/AuthContext.jsx';
 
-const Header = ({ isLoggedIn }) => {
+const Header = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
   const [showHelpMenu, setShowHelpMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const helpMenuRef = useRef(null);
   const profileMenuRef = useRef(null);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -148,7 +150,7 @@ const Header = ({ isLoggedIn }) => {
               scale: isExpanded ? 1 : 0.6,
             }}
           >
-            {isLoggedIn ? (
+            {user ? (
               <div className='relative' ref={profileMenuRef}>
                 <UserCircleIcon
                   className='h-6 w-6 cursor-pointer text-gray-600'
@@ -170,7 +172,7 @@ const Header = ({ isLoggedIn }) => {
                           <Link to='/settings'>Settings</Link>
                         </li>
                         <li className='mt-1'>
-                          <Link to='/auth/sign-out'>Log out</Link>
+                          <button onClick={logout}>Log out</button>
                         </li>
                       </ul>
                     </motion.div>
