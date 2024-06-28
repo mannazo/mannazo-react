@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../ResponsiveHeader.jsx';
+import Header from '../Header.jsx';
 
 const Layout = () => {
   const [loggedIn, setLoggedIn] = useState(false);
