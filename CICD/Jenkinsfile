@@ -26,7 +26,14 @@ pipeline {
                     // npm 캐시 설정 및 ci 실행
                     sh """
                         npm config set cache "${npmCacheDir}"
-                        npm ci --prefer-offline --no-audit --maxsockets 50
+                    
+                        if [ ! -f package-lock.json ]; then
+                            echo "package-lock.json not found. Running npm install to generate it."
+                            npm install --prefer-offline --no-audit --maxsockets 50
+                        else
+                            echo "package-lock.json found. Running npm ci."
+                            npm ci --prefer-offline --no-audit --maxsockets 50    
+                        fi
                     """
                 }
             }
