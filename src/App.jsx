@@ -49,7 +49,7 @@ function App() {
           <Route exact path='/kakao/callback' element={<Redirection />} />
 
           {/*Nav-MypageScreen*/}
-          <Route path={PATHS.MYPAGE} element={<Signup2Screen />}>
+          <Route path={PATHS.MYPAGE} element={<MypageScreen />}>
             <Route path='Sumgocash' element={<Sumgocash />} />
             <Route path={PATHS.ACCOUNT} element={<AccountSetting />} />
           </Route>
