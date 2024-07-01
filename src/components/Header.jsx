@@ -1,16 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  AdjustmentsHorizontalIcon,
+  ArrowRightEndOnRectangleIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
   MagnifyingGlassIcon,
   QuestionMarkCircleIcon,
-  AdjustmentsHorizontalIcon,
   UserCircleIcon,
   XMarkIcon,
-  ArrowRightEndOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-import { Link, NavLink } from 'react-router-dom';
-import { MYPAGE } from '../constants/paths.js';
-import { useAuth } from '@/hooks/AuthContext.jsx';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import * as PATHS from '../constants/paths.js';
+import { useAuth } from '../hooks/AuthContext.jsx';
 
 const Header = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -19,7 +20,24 @@ const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const helpMenuRef = useRef(null);
   const profileMenuRef = useRef(null);
-  const { user, logout } = useAuth();
+  const { user, login, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleInputFocus = () => {
+    if (!location.pathname.startsWith('/trip')) {
+      navigate('/trip');
+    }
+  };
+
+  const handleTestAuth = () => {
+    if (user) {
+      logout();
+    } else {
+      const testToken = 'this-is-test-token-' + Date.now();
+      login(testToken);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,6 +154,7 @@ const Header = () => {
                 type='text'
                 placeholder='Search...'
                 className='w-full rounded-md border px-2 py-1 pl-8 text-gray-400 placeholder-gray-400'
+                onFocus={handleInputFocus}
               />
               <MagnifyingGlassIcon className='absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400' />
             </div>
@@ -151,39 +170,51 @@ const Header = () => {
             }}
           >
             {user ? (
-              <div className='relative' ref={profileMenuRef}>
-                <UserCircleIcon
-                  className='h-6 w-6 cursor-pointer text-gray-600'
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
-                />
-                <AnimatePresence>
-                  {showProfileMenu && (
-                    <motion.div
-                      className='absolute right-0 top-full mt-2 w-48 rounded-md bg-white p-2 shadow-md'
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                    >
-                      <ul>
-                        <li className='mt-1'>
-                          <Link to={MYPAGE}>My Page</Link>
-                        </li>
-                        <li className='mt-1'>
-                          <Link to='/settings'>Settings</Link>
-                        </li>
-                        <li className='mt-1'>
-                          <button onClick={logout}>Log out</button>
-                        </li>
-                      </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div className='flex items-center'>
+                <Link to={PATHS.CHATLIST}>
+                  <ChatBubbleOvalLeftEllipsisIcon className='mr-2 h-6 w-6 cursor-pointer text-gray-600' />
+                </Link>
+                <div className='relative' ref={profileMenuRef}>
+                  <UserCircleIcon
+                    className='h-6 w-6 cursor-pointer text-gray-600'
+                    onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  />
+                  <AnimatePresence>
+                    {showProfileMenu && (
+                      <motion.div
+                        className='absolute right-0 top-full mt-2 w-48 rounded-md bg-white p-2 shadow-md'
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                      >
+                        <ul>
+                          <li className='mt-1'>
+                            <Link to={PATHS.MYPAGE}>My Page</Link>
+                          </li>
+                          <li className='mt-1'>
+                            <Link to='/settings'>Settings</Link>
+                          </li>
+                          <li className='mt-1'>
+                            <button onClick={logout}>Log out</button>
+                          </li>
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             ) : (
               <Link to={'/auth/sign-in'}>
                 <ArrowRightEndOnRectangleIcon className='h-6 w-6 text-gray-600' />
               </Link>
             )}
+            {/* 테스트용 로그인/로그아웃 버튼 */}
+            <button
+              onClick={handleTestAuth}
+              className='y absolute bottom-[-100%] right-0 ml-4 rounded bg-blue-500 text-white transition-colors hover:bg-blue-600'
+            >
+              {user ? 'Test Logout' : 'Test Login'}
+            </button>
           </motion.div>
         </div>
 

@@ -9,7 +9,8 @@ import TravelSubmissionScreen from './pages/TravelSubmissionScreen.jsx';
 import Signup2Screen from './pages/Signup2Screen.jsx';
 import MypageScreen from './pages/MypageScreen.jsx';
 import Local from './pages/Local.jsx';
-import Chat from './pages/Chat.jsx';
+import ChatRoom from './components/chat/ChatRoom.jsx';
+import ChatRoomList from './components/chat/ChatRoomList.jsx';
 import Sumgocash from './pages/mypage/Sumgocash.jsx';
 import AccountSetting from './pages/mypage/AccountSetting.jsx';
 import Redirection from './pages/Redirection.jsx';
@@ -38,7 +39,9 @@ function App() {
           <Route path='/about/safety' element={<Safety />}></Route>
           <Route path={'/dev/card'} element={<CardView />}></Route>
 
-          <Route path={PATHS.CHAT} element={<Chat />} />
+          <Route path={PATHS.CHAT} element={<ChatRoom />} />
+          <Route path='/chat/list' element={<ChatRoomList />} />
+          <Route path='/chat/room' element={<ChatRoom />} />
           <Route path={PATHS.LOCAL} element={<Local />} />
           <Route path={PATHS.PROFILE} />
           <Route path={PATHS.PROFILE_VIEW} />
