@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 function TopProfile({ user1 }) {
   return (
     <div className='flex flex-row'>

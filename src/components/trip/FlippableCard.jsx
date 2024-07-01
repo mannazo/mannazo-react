@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import {useState} from 'react';
+import {Card, CardBody, CardFooter, Image} from '@nextui-org/react';
 
 function FlippableCard({ user }) {
   const [isFlipped, setIsFlipped] = useState(false);

@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 import axios from 'axios';
-import { API_SERVER } from '../constants/paths.js';
+import {API_SERVER} from '../constants/paths.js';
 
 const Redirection = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {Outlet} from 'react-router-dom';
 import Header from '../Header.jsx';
 
 const Layout = () => {

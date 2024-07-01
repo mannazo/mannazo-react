@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
 const SafetyTip = ({ icon, title, description }) => (
   <div className='rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 p-6 text-white shadow-xl transition-all duration-300 hover:shadow-2xl'>

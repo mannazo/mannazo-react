@@ -1,5 +1,5 @@
 import * as PATHS from '../../constants/paths.js';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const FeatureCard = ({ icon, title, description }) => (
   <div className='transform rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl'>

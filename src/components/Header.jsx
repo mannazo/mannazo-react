@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {useEffect, useRef, useState} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
 import {
-  MagnifyingGlassIcon,
-  QuestionMarkCircleIcon,
-  AdjustmentsHorizontalIcon,
-  UserCircleIcon,
-  XMarkIcon,
-  ArrowRightEndOnRectangleIcon,
+    AdjustmentsHorizontalIcon,
+    ArrowRightEndOnRectangleIcon,
+    MagnifyingGlassIcon,
+    QuestionMarkCircleIcon,
+    UserCircleIcon,
+    XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Link, NavLink } from 'react-router-dom';
-import { MYPAGE } from '../constants/paths.js';
-import { useAuth } from '@/hooks/AuthContext.jsx';
+import {Link, NavLink} from 'react-router-dom';
+import {MYPAGE} from '../constants/paths.js';
+import {useAuth} from '@/hooks/AuthContext.jsx';
 
 const Header = () => {
   const [isExpanded, setIsExpanded] = useState(true);

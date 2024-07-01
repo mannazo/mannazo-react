@@ -1,5 +1,5 @@
 import * as PATHS from '../../constants/paths.js';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const StepCard = ({ number, title, description }) => (
   <div className='transform rounded-3xl bg-gradient-to-br from-purple-600 to-indigo-700 p-8 text-white shadow-2xl transition-all duration-300 hover:scale-105'>
