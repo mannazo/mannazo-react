@@ -95,16 +95,26 @@ pipeline {
         always {
             echo 'Cleaning up workspace...'
             script {
-                // 빌드 결과물 및 임시 파일 삭제
                 sh '''
+                    # 빌드 결과물 및 임시 파일 삭제
                     rm -rf dist docker_build
                     find . -name "*.log" -type f -delete
                     find . -name "*.tmp" -type f -delete
-                '''
 
-                // node_modules는 유지
-                // 캐시된 npm 패키지는 JENKINS_HOME/npm-cache에 저장되므로 삭제하지 않음
+                    # Docker 이미지 정리
+                    docker rmi mannazo/front-react:${BUILD_NUMBER} || true
+                    docker rmi ${DOCKER_REGISTRY_URL}/mannazo/front-react:${BUILD_NUMBER} || true
+                    docker system prune -f
+                '''
             }
+            // Jenkins의 기본 정리 기능 사용
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: 'node_modules', type: 'EXCLUDE'],
+                               [pattern: 'package.json', type: 'EXCLUDE'],
+                               [pattern: 'package-lock.json', type: 'EXCLUDE']])
         }
     }
 }
