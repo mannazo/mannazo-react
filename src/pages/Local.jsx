@@ -1,4 +1,4 @@
-import TripList from "../components/trip/TripList.jsx";
+import TripList from '../components/trip/TripList.jsx';
 
 const Local = () => {
   return (

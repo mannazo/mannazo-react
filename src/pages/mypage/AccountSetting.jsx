@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import AccountSettingModify from './AccountSettingModify.jsx';
 import axios from 'axios';
-import { API_SERVER } from '../../constants/paths.js';
 
 const AccountSetting = () => {
   // 사용자가 계정 변경 버튼 눌렀는지에 대한 상태
