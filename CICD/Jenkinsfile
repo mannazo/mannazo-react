@@ -16,8 +16,19 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // npm 의존성 설치
-                sh 'npm install'
+                script {
+                    // Jenkins의 캐시 디렉토리 지정
+                    def npmCacheDir = "${JENKINS_HOME}/npm-cache"
+
+                    // 캐시 디렉토리가 없으면 생성
+                    sh "mkdir -p ${npmCacheDir}"
+
+                    // npm 캐시 설정 및 ci 실행
+                    sh """
+                        npm config set cache "${npmCacheDir}"
+                        npm ci --prefer-offline --no-audit --maxsockets 50
+                    """
+                }
             }
         }
 
@@ -76,7 +87,17 @@ pipeline {
     post {
         always {
             echo 'Cleaning up workspace...'
-            deleteDir() 
+            script {
+                // 빌드 결과물 및 임시 파일 삭제
+                sh '''
+                    rm -rf dist docker_build
+                    find . -name "*.log" -type f -delete
+                    find . -name "*.tmp" -type f -delete
+                '''
+
+                // node_modules는 유지
+                // 캐시된 npm 패키지는 JENKINS_HOME/npm-cache에 저장되므로 삭제하지 않음
+            }
         }
     }
 }
