@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import * as PATHS from './constants/paths.js';
 import Layout from './components/layouts/Layout.jsx';
 import SignupScreen from './pages/SignupScreen.jsx';
@@ -21,7 +21,7 @@ import WhyMannazu from './pages/about/WhyMannazu.jsx';
 import HowItWorks from './pages/about/HowItWorks.jsx';
 import Safety from './pages/about/Safety.jsx';
 import AboutAll from './pages/about/AboutAll.jsx';
-import { AuthProvider } from './hooks/AuthContext.jsx';
+import {AuthProvider} from './hooks/AuthContext.jsx';
 
 function App() {
   return (

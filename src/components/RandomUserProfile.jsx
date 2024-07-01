@@ -1,6 +1,6 @@
 // src/components/UserProfileCard.jsx
 import React from 'react';
-import { Card, CardBody, CardFooter, Image, Button } from '@nextui-org/react';
+import {Button, Card, CardBody, CardFooter, Image} from '@nextui-org/react';
 
 function UserProfileCard({ user }) {
   if (!user) return <div>No user data available</div>;

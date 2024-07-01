@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Card from './Card';
-import { useState } from 'react';
+import {useState} from 'react';
 
 const CardsContainer = styled.div`
   display: flex;

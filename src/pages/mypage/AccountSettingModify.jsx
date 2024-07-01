@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
-import { API_SERVER } from '../../constants/paths.js';
-import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../../constants/inputvalues.jsx';
+import {API_SERVER} from '../../constants/paths.js';
+import {INTERESTS, LANGUAGE, MBTI, NATIONALITY} from '../../constants/inputvalues.jsx';
 
 const AccountSettingModify = ({ setIsModifyClicked, userData, setIsComplete }) => {
   const [formData, setFormData] = useState({

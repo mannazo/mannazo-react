@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
-import { API_SERVER } from '../../constants/paths.js';
+import {API_SERVER} from '../../constants/paths.js';
 import AccountSettingModify from './AccountSettingModify.jsx';
 
 const AccountSetting = () => {

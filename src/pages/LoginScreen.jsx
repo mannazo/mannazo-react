@@ -1,7 +1,6 @@
-import { FcGoogle } from 'react-icons/fc';
 import Logo from '/vite.svg';
 import axios from 'axios';
-import { API_SERVER } from '../constants/paths.js';
+import {API_SERVER} from '../constants/paths.js';
 
 const LoginScreen = () => {
   const onKakaoButtonClick = async () => {

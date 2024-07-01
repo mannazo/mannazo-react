@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
 const TripInfo = () => {
   const [location, setLocation] = useState('');
