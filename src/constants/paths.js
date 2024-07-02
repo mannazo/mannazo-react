@@ -20,6 +20,7 @@ export const LOCAL_VIEW_INTRO = `${LOCAL}/:id`;
 
 //채팅
 export const CHAT = '/chat';
+export const CHATLIST = `${CHAT}/list`;
 
 //Auth: 사인인, 사인아웃, 사인업
 export const AUTH = '/auth';

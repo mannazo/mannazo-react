@@ -1,4 +1,3 @@
-import { Link, Outlet } from 'react-router-dom';
 import * as PATHS from '../../constants/paths.js';
 
 const Nav = () => {

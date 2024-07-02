@@ -3,9 +3,9 @@ import '../styles/Footer.css';
 const Footer = () => {
   return (
     <>
-      <footer className='bg-white dark:bg-gray-800 w-full py-2'>
-        <div className='max-w-screen-xl px-4 mx-auto'>
-          <div className='pt-2 flex max-w-xs mx-auto items-center justify-between'>
+      <footer className='w-full bg-white py-2 dark:bg-gray-800'>
+        <div className='mx-auto max-w-screen-xl px-4'>
+          <div className='mx-auto flex max-w-xs items-center justify-between pt-2'>
             <a
               href='#'
               className='text-gray-400 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white'
@@ -82,10 +82,10 @@ const Footer = () => {
               </svg>
             </a>
           </div>
-          <ul className='flex flex-wrap justify-between max-w-screen-md mx-auto text-lg font-light'>
+          <ul className='mx-auto flex max-w-screen-md flex-wrap justify-between text-lg font-light'>
             <li className='my-2'>
               <a
-                className='text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200'
+                className='text-gray-400 transition-colors duration-200 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                 href='#'
               >
                 FAQ
@@ -93,7 +93,7 @@ const Footer = () => {
             </li>
             <li className='my-2'>
               <a
-                className='text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200'
+                className='text-gray-400 transition-colors duration-200 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                 href='#'
               >
                 Configuration
@@ -101,7 +101,7 @@ const Footer = () => {
             </li>
             <li className='my-2'>
               <a
-                className='text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200'
+                className='text-gray-400 transition-colors duration-200 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                 href='#'
               >
                 Github
@@ -109,7 +109,7 @@ const Footer = () => {
             </li>
             <li className='my-2'>
               <a
-                className='text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200'
+                className='text-gray-400 transition-colors duration-200 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white'
                 href='#'
               >
                 LinkedIn

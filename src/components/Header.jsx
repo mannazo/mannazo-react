@@ -1,39 +1,247 @@
-import '../styles/Header.css';
-import { NavLink } from 'react-router-dom';
-import * as PATHS from '../constants/paths';
-import Logo from '/vite.svg';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  AdjustmentsHorizontalIcon,
+  ArrowRightEndOnRectangleIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  MagnifyingGlassIcon,
+  QuestionMarkCircleIcon,
+  UserCircleIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import * as PATHS from '../constants/paths.js';
+import { useAuth } from '../hooks/AuthContext.jsx';
 
 const Header = () => {
-  return (
-    <>
-      <header>
-        <nav className='bg-white dark:bg-gray-800'>
-          <div className='mx-auto max-w-7xl px-8'>
-            <div className='flex h-16 items-center justify-between'>
-              <div className='flex items-center'>
-                <a className='flex-shrink-0' href='/'>
-                  <img className='h-8 w-8' src={Logo} alt='Workflow' />
-                </a>
-                <Menus />
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
-    </>
-  );
-};
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showHelpMenu, setShowHelpMenu] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const helpMenuRef = useRef(null);
+  const profileMenuRef = useRef(null);
+  const { user, login, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const Menus = () => {
+  const handleInputFocus = () => {
+    if (!location.pathname.startsWith('/trip')) {
+      navigate('/trip');
+    }
+  };
+
+  const handleTestAuth = () => {
+    if (user) {
+      logout();
+    } else {
+      const testToken = 'this-is-test-token-' + Date.now();
+      login(testToken);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsExpanded(scrollPosition === 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (helpMenuRef.current && !helpMenuRef.current.contains(event.target)) {
+        setShowHelpMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const toggleHelpMenu = () => {
+    setShowHelpMenu(!showHelpMenu);
+  };
+
   return (
-    <div className='ml-10 flex items-baseline space-x-4'>
-      <NavLink to={PATHS.HOME}>Home</NavLink>
-      <NavLink to={PATHS.SAFETY}>Safety</NavLink>
-      <NavLink to={PATHS.TRIP}>여행자</NavLink>
-      <NavLink to={PATHS.LOCAL}>쭈니</NavLink>
-      <NavLink to={PATHS.CHAT}>채팅방</NavLink>
-      <NavLink to={PATHS.AUTH_SIGN_IN}>로그인</NavLink>
-      <NavLink to={PATHS.AUTH_SIGN_UP_FORM}>회원가입</NavLink>
+    <div className='flex w-full justify-center'>
+      <motion.header
+        className='fixed top-0 z-50 flex items-center justify-center bg-white shadow-md'
+        initial={false}
+        animate={{
+          height: isExpanded ? '40px' : '20px',
+          width: isExpanded ? 'min(100vw, 1600px)' : 'min(100vw, 1280px)',
+        }}
+        transition={{ duration: 0.3 }}
+        onMouseEnter={() => setIsExpanded(true)}
+      >
+        <div className='flex w-full items-center justify-between px-4'>
+          <div className='flex items-center'>
+            <NavLink to={'/'}>
+              <motion.img
+                src='/logo.png'
+                alt='Logo'
+                animate={{
+                  height: isExpanded ? '24px' : '16px',
+                }}
+                className='mr-2'
+              />
+            </NavLink>
+          </div>
+
+          <motion.div
+            className='mx-4 flex flex-grow items-center'
+            animate={{
+              scale: isExpanded ? 1 : 0.6,
+              opacity: isExpanded ? 1 : 0.8,
+            }}
+          >
+            <div className='relative mr-2' ref={helpMenuRef}>
+              <QuestionMarkCircleIcon
+                className='h-6 w-6 cursor-pointer text-gray-600'
+                onClick={toggleHelpMenu}
+              />
+              <AnimatePresence>
+                {showHelpMenu && (
+                  <motion.div
+                    className='absolute left-0 top-full mt-2 w-48 rounded-md bg-white p-2 shadow-md'
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    <div className='relative'>
+                      <XMarkIcon
+                        className='absolute right-0 top-0 h-4 w-fit cursor-pointer text-gray-600'
+                        onClick={() => setShowHelpMenu(false)}
+                      />
+                      <ul className='mt-4'>
+                        <Link to='/about'>
+                          <li className='mt-1'>About Mannazu</li>
+                        </Link>
+                        <Link to='/about/why'>
+                          <li className='mt-1'>Why Mannazu?</li>
+                        </Link>
+                        <Link to='/about/how-it-works'>
+                          <li className='mt-1'>How it works?</li>
+                        </Link>
+                        <Link to='/about/safety'>
+                          <li className='mt-1'>Safety</li>
+                        </Link>
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className='relative flex-grow'>
+              <input
+                type='text'
+                placeholder='Search...'
+                className='w-full rounded-md border px-2 py-1 pl-8 text-gray-400 placeholder-gray-400'
+                onFocus={handleInputFocus}
+              />
+              <MagnifyingGlassIcon className='absolute left-2 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400' />
+            </div>
+            <AdjustmentsHorizontalIcon
+              className='ml-2 h-6 w-6 cursor-pointer text-gray-600'
+              onClick={() => setShowOptions(!showOptions)}
+            />
+          </motion.div>
+
+          <motion.div
+            animate={{
+              scale: isExpanded ? 1 : 0.6,
+            }}
+          >
+            {user ? (
+              <div className='flex items-center'>
+                <Link to={PATHS.CHATLIST}>
+                  <ChatBubbleOvalLeftEllipsisIcon className='mr-2 h-6 w-6 cursor-pointer text-gray-600' />
+                </Link>
+                <div className='relative' ref={profileMenuRef}>
+                  <UserCircleIcon
+                    className='h-6 w-6 cursor-pointer text-gray-600'
+                    onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  />
+                  <AnimatePresence>
+                    {showProfileMenu && (
+                      <motion.div
+                        className='absolute right-0 top-full mt-2 w-48 rounded-md bg-white p-2 shadow-md'
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                      >
+                        <ul>
+                          <li className='mt-1'>
+                            <Link to={PATHS.MYPAGE}>My Page</Link>
+                          </li>
+                          <li className='mt-1'>
+                            <Link to='/settings'>Settings</Link>
+                          </li>
+                          <li className='mt-1'>
+                            <button onClick={logout}>Log out</button>
+                          </li>
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            ) : (
+              <Link to={'/auth/sign-in'}>
+                <ArrowRightEndOnRectangleIcon className='h-6 w-6 text-gray-600' />
+              </Link>
+            )}
+            {/* 테스트용 로그인/로그아웃 버튼 */}
+            <button
+              onClick={handleTestAuth}
+              className='y absolute bottom-[-100%] right-0 ml-4 rounded bg-blue-500 text-white transition-colors hover:bg-blue-600'
+            >
+              {user ? 'Test Logout' : 'Test Login'}
+            </button>
+          </motion.div>
+        </div>
+
+        <AnimatePresence>
+          {showOptions && (
+            <motion.div
+              className='absolute left-0 right-0 top-full bg-white shadow-md'
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <div className='relative flex items-center justify-between p-4'>
+                <XMarkIcon
+                  className='absolute right-2 top-2 h-6 w-6 cursor-pointer text-gray-600'
+                  onClick={() => setShowOptions(false)}
+                />
+                <ul className='mb-4 flex'>
+                  <li className='mr-4 cursor-pointer'>Tab 1</li>
+                  <li className='mr-4 cursor-pointer'>Tab 2</li>
+                  <li className='cursor-pointer'>Tab 3</li>
+                </ul>
+                <div>Option content goes here</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
     </div>
   );
 };
