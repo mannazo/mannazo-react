@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { API_SERVER } from '../constants/paths.js';
-import { INTERESTS, LANGUAGE, MBTI, NATIONALITY } from '../constants/inputvalues.jsx';
-
+import { INTERESTS, LANGUAGE, MBTI, NATIONALITY, GENDER } from '../constants/inputvalues.jsx';
+import fetchUserData from '../hooks/fetchUserData.jsx';
 import { dotenv } from 'dotenv';
 
 const awsConfig = {
@@ -24,17 +25,29 @@ const s3Client = new S3Client({
 
 function Signup2Screen() {
   const [error, setError] = useState('');
-  const [storedUserInfo, setStoredUserInfo] = useState(
-    JSON.parse(localStorage.getItem('fetchCodeResponse')),
-  );
+  const [storedUserInfo, setStoredUserInfo] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadedFileName, setUploadedFileName] = useState('');
-
+  const navigate = useNavigate();
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-
-  function handleChange(event) {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await axios.get(
+          API_SERVER + '/api/v1/user/' + localStorage.getItem('uuid'),
+        );
+        console.log('success');
+        setStoredUserInfo(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error('로그인 실패', error);
+      }
+    };
+    load();
+  }, []);
+  function handleChange(e) {
     const { name, value } = e.target;
     setStoredUserInfo({
       ...storedUserInfo,
@@ -72,13 +85,13 @@ function Signup2Screen() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const s3FileName = await uploadImageToS3(selectedFile);
     console.log(s3FileName);
     if (s3FileName) {
       const updatedUserInfo = {
         ...storedUserInfo,
         profilePhoto: s3FileName,
+        firstTimeUser: false,
       };
       console.log(updatedUserInfo);
       // setStoredUserInfo(updatedUserInfo);
@@ -87,6 +100,7 @@ function Signup2Screen() {
         .put(API_SERVER + '/api/v1/user', updatedUserInfo)
         .then((response) => {
           console.log(response.data);
+          navigate('/');
         })
         .catch((error) => {
           console.error(error);
@@ -105,14 +119,29 @@ function Signup2Screen() {
           <label>Name:</label>
           <input type='text' name='name' required onChange={handleChange} />
         </div>
+
+        <div>
+          <label>MBTI</label>
+          <select name='mbti' onChange={handleChange}>
+            {MBTI.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>City:</label>
+          <input type='text' name='city' required onChange={handleChange} />
+        </div>
         <div>
           <label>Birthday:</label>
           <input type='date' name='birthday' required onChange={handleChange} />
         </div>
         <div>
-          <label>MBTI</label>
-          <select name='mbti' onChange={handleChange}>
-            {MBTI.map((value) => (
+          <label>Gender:</label>
+          <select name='gender' onChange={handleChange}>
+            {GENDER.map((value) => (
               <option key={value} value={value}>
                 {value}
               </option>
@@ -139,10 +168,6 @@ function Signup2Screen() {
             ))}
           </select>
         </div>
-        {/*<div>*/}
-        {/*  <label>이미지</label>*/}
-        {/*  <input type='file' name='profilePhoto' onChange={handleImage}/>*/}
-        {/*</div>*/}
         <div>
           <label>Interests</label>
           <div>

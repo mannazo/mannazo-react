@@ -6,25 +6,42 @@ import { API_SERVER } from '../constants/paths.js';
 
 const TravelSubmissionScreen = () => {
   const [showModal, setShowModal] = useState(false);
-  const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('fetchCodeResponse')));
+  const [userId, setUserId] = useState(localStorage.getItem('uuid'));
   const [tripData, setTripData] = useState({
-    userId: userInfo.userId,
-    destination: '',
+    userId: userId,
+    travelCountry: '',
+    travelCity: '',
     startDate: '',
     endDate: '',
-    // travelStyle: '',
-    // w_gender: '',
+    travelPurpose: 'Fun',
+    travelStatus: '등록',
+    preferredGender: '남자',
     // t_style: '',
     // t_goal: '',
   });
 
   useEffect(() => {
-    const userinfo = localStorage.getItem('fetchCodeResponse');
-    if (!userinfo) {
-      setShowModal(true);
-      console.log('false');
+    const checkuser = async () => {
+      try {
+        const response = await axios.get(
+          API_SERVER + '/api/v1/user/' + localStorage.getItem('uuid'),
+        );
+        console.log('success');
+        console.log(response.data);
+        // if(response.data.firsttimeuser === true){
+        //    pop up to modal that leads to navigate to sign up page.
+        // }
+        setTripData(response.data);
+      } catch (error) {
+        console.error('로그인 실패', error);
+      }
+    };
+
+    if (!localStorage.getItem('uuid')) {
+      console.log('Not logged in');
     } else {
-      console.log('True');
+      setUserId(localStorage.getItem('uuid')); // 우선
+      // checkuser()  // signup 에서 Firsttimeuser===false 로 바꾸는 설정 후 진행.
     }
   }, []);
 
@@ -32,7 +49,8 @@ const TravelSubmissionScreen = () => {
     console.log(country, region);
     setTripData((prevState) => ({
       ...prevState,
-      destination: country + region,
+      travelCountry: country,
+      travelCity: region,
     }));
   };
 
