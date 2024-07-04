@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../ResponsiveHeader.jsx';
+import Header from '../Header.jsx';
 
 const Layout = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -11,9 +11,9 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className='flex min-h-screen flex-col py-8'>
-      <Header isLoggedIn={loggedIn}></Header>
-      <main className='flex-grow'>
+    <div className='flex h-screen flex-col'>
+      <Header isLoggedIn={loggedIn} />
+      <main className='flex-grow pt-8'>
         <Outlet />
       </main>
     </div>

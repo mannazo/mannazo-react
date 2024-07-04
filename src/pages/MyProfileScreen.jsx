@@ -1,13 +1,7 @@
-import { useState, useEffect } from 'react';
-
 function TopProfile({ user1 }) {
   return (
     <div className='flex flex-row'>
-      <img
-        src={user1.profileImage}
-        alt='User Avatar'
-        className='rounded-full w-20 h-20 mr-4'
-      />
+      <img src={user1.profileImage} alt='User Avatar' className='mr-4 h-20 w-20 rounded-full' />
       <div>
         <h1>{user1.name}</h1>
         <ul>

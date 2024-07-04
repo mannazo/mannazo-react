@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import React, { useState } from 'react';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_SERVER } from '../constants/paths.js';
+
 import { INTERESTS, LANGUAGE, MBTI, NATIONALITY, GENDER } from '../constants/inputvalues.jsx';
 import fetchUserData from '../hooks/fetchUserData.jsx';
 import { dotenv } from 'dotenv';
