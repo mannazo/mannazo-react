@@ -9,9 +9,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <NextUIProvider>
     <BrowserRouter>
-      <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+      {/* <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}> */}
         <App />
-      </DevSupport>
+      {/* </DevSupport> */}
     </BrowserRouter>
   </NextUIProvider>,
   // </React.StrictMode>,
