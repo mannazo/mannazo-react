@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { API_SERVER } from '../constants/paths.js';
+import { getUser } from '../api/userapi.js';
+import { userService } from '../services/userService.jsx';
 
 const Redirection = () => {
   const navigate = useNavigate();
@@ -9,7 +11,9 @@ const Redirection = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(API_SERVER + '/api/v1/user/' + localStorage.getItem('uuid'));
+      // const userId = localStorage.getItem('uuid');
+      const response = await userService.getUser(localStorage.getItem('uuid'));
+      // const response = await axios.get(API_SERVER + '/api/v1/user/' + localStorage.getItem('uuid'));
       console.log('success');
       console.log(response.data);
       if (response.data.firstTimeUser === true) {
