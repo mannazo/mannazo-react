@@ -1,6 +1,7 @@
 import Logo from '/vite.svg';
 import axios from 'axios';
 import { API_SERVER } from '../constants/paths.js';
+import { getKakaoAuthUrl } from '../api/authApi.jsx';
 
 const LoginScreen = () => {
   const onKakaoButtonClick = async () => {
@@ -15,7 +16,7 @@ const LoginScreen = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_SERVER + '/login/kakao/auth');
+      const response = await getKakaoAuthUrl();
       return response.data;
     } catch (error) {
       console.error(`Error fetching data: ${error}`);
